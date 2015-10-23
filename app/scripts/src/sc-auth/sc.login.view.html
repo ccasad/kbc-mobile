@@ -1,0 +1,38 @@
+<ion-view title="" hide-nav-bar="true" class="sc-login-container">
+	<ion-content>
+
+		<div class="row row-center sc-row-center">
+      <div class="col" data-ng-class="{'sc-login-logo-container' : vm.isAnimationAvailable}">
+        <img src="images/logo_white.png" class="sc-login-logo" data-ng-class="{'sc-login-logo' : vm.isAnimationAvailable}" data-ng-if="vm.logo" />
+      </div>
+		</div>
+
+		<div class="row row-center sc-row-center">
+  		<div class="col">
+  			<div class="sc-login-box">
+		  		<form accept-charset="UTF-8" role="form" id="loginForm" name="loginForm" data-ng-submit="vm.login(loginForm.$valid)" novalidate="novalidate">
+		  			<label class="item item-input">
+		  				<input type="email" placeholder="Email" data-ng-model="vm.loginCredentials.email" data-ng-required="true" name="email" id="email">
+		  			</label>
+		  			<label class="item item-input">
+							<input type="password" placeholder="Password" data-ng-model="vm.loginCredentials.password" data-ng-required="true" name="password" id="password">
+						</label>
+		  			<button class="button button-dark button-block" type="submit" data-ng-click="submitted=true"><strong>SIGN ME IN!</strong></button>
+		  		</form>
+	  		</div>
+  		</div>
+  	</div>
+
+		<div class="row row-center sc-row-center">
+  		<div class="col">
+				<div class="sc-login-text">
+					<strong>OR Sign in with</strong>
+				</div>
+				<div class="sc-login-social-container">
+					<i data-ng-repeat="socialAccount in vm.socialAccounts" data-ng-click="vm.loginWithSocialAccount(socialAccount.id)" class="icon ion-social-{{::socialAccount.classTitle}} sc-login-social-icon"></i>
+				</div>
+			</div>
+		</div>
+
+	</ion-content>
+</ion-view>

@@ -1,0 +1,17 @@
+node_modules
+www
+platforms
+plugins
+resources/*/*
+coverage
+.temp
+.idea
+.tmp
+.sass-cache
+*.swp
+*.swo
+*.log
+*.DS_Store
+app/scripts/all.js
+app/scripts/src/sc.app.environment.config.js
+.project

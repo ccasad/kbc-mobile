@@ -1,0 +1,80 @@
+<ion-view>
+  <ion-nav-title>
+    <span>Jobs</span>
+  </ion-nav-title>
+
+  <ion-nav-buttons side="secondary" data-ng-show="vm.jobs.isFilterVisible">
+    <button class="button button-icon icon ion-funnel sc-icon-small" data-ng-click="vm.showFilters();"></button>
+  </ion-nav-buttons>
+
+  <div class="bar bar-subheader sc-jobs-list" data-ng-if="vm.isCenterRepUser && vm.jobs.employers.length > 0">
+    <label class="item item-divider item-input item-select" >
+      <div class="input-label">
+        Employer:
+      </div>
+      <select id="employerId" name="employerId" data-ng-model="vm.jobs.employerId" data-ng-change="vm.getJobsList()" class="" data-ng-options="employer.id as employer.name for employer in vm.jobs.employers" >
+      </select>
+    </label>
+  </div>
+
+  <ion-content data-ng-class="{ 'has-subheader': vm.isCenterRepUser && vm.jobs.employers.length > 0 }">
+
+    <ion-refresher
+      pulling-text="Release to refresh..."
+      pulling-icon="ion-arrow-down-c"
+      on-refresh="vm.refreshJobsList()">
+    </ion-refresher>
+
+    <!-- <div class="bar bar-header item-input-inset" data-ng-show="vm.jobs.isFilterVisible">
+        <ion-search placeholder="Search a user" filter="search"></ion-search>
+    </div> -->
+
+   <!--  <label class="item item-divider item-input item-select" data-ng-show="vm.jobs.isFilterVisible">
+      <div class="input-label">
+        Sort By:
+      </div>
+      <select id="sortBy" name="sortBy" data-ng-model="vm.jobs.sortBy" class="" data-ng-options="sortBy.id as sortBy.name for sortBy in vm.jobs.sortByList" >
+      </select>
+    </label>
+
+    <label class="item item-divider item-input sc-jobs-search" data-ng-show="vm.jobs.isFilterVisible">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input name="search" data-ng-model="vm.jobs.search" type="text" placeholder="Search...">
+    </label> -->
+
+    <ion-list class="sc-jobs-list">
+      <!-- | orderBy:vm.jobs.sortBy -->
+      <ion-item data-ng-repeat="job in filteredJobs = (vm.jobs.list)"
+                class="item"
+                id="job-{{::job.jobId}}">
+
+        <!-- Job START -->
+        <div class="sc-job-content-wrapper">
+          <div class="sc-job-content">
+
+            <h2 class="sc-jobs-id pull-left" data-ng-bind-html="job.jobUrl | scUrlToJs:job.jobId"></h2>
+            <h2 data-ng-bind-html="job.jobUrl | scUrlToJs:job.jobTitle"></h2>
+            <p class="pull-left" data-ng-bind-html="::job.jobStatus"></p>
+            <p class="pull-right" data-ng-bind-html="::job.lastSentDate | scDateFormat"></p>
+
+          </div>
+        </div>
+        <!-- MESSAGE END -->
+
+      </ion-item>
+    </ion-list>
+
+    <div class="card text-center small text-warning" data-ng-show="filteredJobs.length < 1 && !vm.jobs.loading">
+      <div class="item item-text-wrap" data-ng-bind="vm.jobs.noJobsText"></div>
+    </div>
+
+    <ion-infinite-scroll
+      data-ng-if="vm.jobs.showMoreJobsLink"
+      icon="ion-loading-c"
+      on-infinite="vm.getMoreJobsList()"
+      distance="1%">
+    </ion-infinite-scroll>
+
+  </ion-content>
+
+</ion-view>

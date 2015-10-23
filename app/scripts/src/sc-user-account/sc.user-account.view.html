@@ -1,0 +1,18 @@
+<ion-view view-title="Account">
+	<ion-content class="padding sc-content">
+		<div class="list card" style="text-align:center;">
+      <!-- <img src="http://www-mcgp1-dev-portal.hvcp.local/sc.apirouter.php?route=avatar/229_1423062351" class="sc-user-avatar-large"> -->
+      <!-- <span sc-user-avatar="{userAvatar: vm.vars.user.avatar, cssClass: 'sc-user-avatar-large'}"></span> -->
+      <div data-sc-avatar-letter="sc-avatar-letter" data-avatar-class="sc-inline-block sc-account-avatar" data-avatar-size="lg" data-background-class="warning" data-ng-bind="vm.vars.user.firstName.charAt(0)"></div>
+
+      <h2 data-ng-bind="vm.vars.user.firstName+' '+vm.vars.user.lastName"></h2>
+      <h4 data-ng-bind="vm.vars.user.email"></h4>
+      <!-- <p><a href="javascript:void(0);">Update your account</a></p> -->
+    </div>
+    <div>
+    	<button class="button button-block button-stable" data-ng-click="vm.signOut()">
+    		<span class="sc-font-bold">Sign Out</span>
+    	</button>
+    </div>
+	</ion-content>
+</ion-view>

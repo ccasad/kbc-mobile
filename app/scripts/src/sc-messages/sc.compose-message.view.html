@@ -1,0 +1,72 @@
+<ion-view>
+  <ion-nav-title>
+    <span data-ng-bind="::vm.composeMessageVars.title"></span>
+  </ion-nav-title>
+
+  <!-- <ion-nav-back-button class="button-clear">
+    <i class="ion-arrow-left-c"></i> <i class="ion-ios-email"></i>
+  </ion-nav-back-button> -->
+
+  <!-- <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-paperplane" data-ng-click="(composeMessageForm.$invalid || vm.composeMessageVars.postMsgInProcess) && vm.sendMessage(composeMessageForm);"></button>
+  </ion-nav-buttons> -->
+
+  <ion-content class="padding sc-content">
+
+    <div class="item sc-compose-message-form-box">
+      <form id="composeMessageForm" name="composeMessageForm" data-ng-submit="(!composeMessageForm.$invalid) && vm.sendMessage(composeMessageForm)" novalidate="">
+        <div>
+
+          <div class="form-group sc-compose-message-avatar-wrapper">
+            <!-- <span sc-user-avatar="{userAvatar: vm.user.avatar, cssClass: 'pull-left sc-user-avatar-x-small'}"></span> -->
+            <div data-sc-avatar-letter="sc-avatar-letter" data-avatar-class="" data-avatar-size="md" data-background-class="warning" data-ng-bind="vm.user.firstName.charAt(0)"></div>
+            <h2 data-ng-bind="'&nbsp;&nbsp;'+vm.user.firstName+' '+vm.user.lastName"></h2>
+          </div>
+
+          <div class="sc-compose-message-to-wrapper">
+            <div class="form-group" data-ng-class="{ 'has-error' : composeMessageForm.messageTo.$invalid && !composeMessageForm.messageTo.$pristine }">
+              <label class="sr-only" for="messageTo">Select To:</label>
+              <select id="messageTo" name="messageTo" data-ng-model="vm.composeMessageVars.messageTo" class="form-control" required="required" data-ng-options="msgTo.name group by msgTo.messageTypeTitle for msgTo in vm.composeMessageVars.messageToList" >
+                <option value="">-- To: --</option>
+              </select>
+              <p data-ng-show="composeMessageForm.messageTo.$invalid && !composeMessageForm.messageTo.$pristine" class="help-block small ng-hide">Please select.</p>
+            </div>
+          </div>
+
+          <div class="sc-compose-message-inputbox-wrapper">
+            <div class="form-group" data-ng-class="{ 'has-error' : composeMessageForm.composeMessageInputbox.$invalid && !composeMessageForm.composeMessageInputbox.$pristine }">
+
+              <label class="sr-only" for="composeMessageInputbox">Post Message</label>
+
+              <textarea msd-elastic data-ng-style="{ 'max-height' : vm.composeMessageVars.messageTxtAreaMaxHeight}" name="composeMessageInputbox" data-ng-model="vm.composeMessageVars.messageTxt" required="" data-ng-trim="true" class="sc-compose-message-inputbox form-control" id="composeMessageInputbox" placeholder="Post a Message"></textarea>
+
+              <p data-ng-show="composeMessageForm.composeMessageInputbox.$invalid && !composeMessageForm.composeMessageInputbox.$pristine" class="help-block small ng-hide">Valid Message is required.</p>
+            </div>
+
+            <div data-ng-show="vm.composeMessageVars.messageTo.JobIdInput" class="form-group" data-ng-class="{ 'has-error' : composeMessageForm.referenceId.$invalid && !composeMessageForm.referenceId.$pristine }">
+              <label class="sr-only" for="referenceId">VOCcenter Job Id</label>
+              <input data-ng-model="vm.composeMessageVars.messageReferenceId" type="text" class="form-control sc-input" id="referenceId" name="referenceId" placeholder="Enter a VOCcenter Job Id" data-ng-maxlength="45">
+              <p data-ng-show="composeMessageForm.referenceId.$invalid && !composeMessageForm.referenceId.$pristine" class="help-block small">Enter a VOCcenter Job Id
+                <!-- <span data-ng-show="composeMessageForm.referenceId.$error.required">- It's Required!</span>  -->
+                <span data-ng-show="composeMessageForm.referenceId.$error.maxlength">- Too long VOCcenter Job Id!</span>
+              </p>
+            </div>
+
+            <div class="form-group form-inline" >
+              <input type="submit" data-ng-disabled="composeMessageForm.$invalid || composeMessageForm.$pristine || vm.composeMessageVars.postMsgInProcess" id="submit" value="Save" class="btn btn-sm btn-success pull-right sc-btn-margin-left">
+
+              <input type="reset" id="reset" value="Cancel" data-ng-click="composeMessageForm.$setPristine(); vm.goBack();" class="btn btn-sm btn-default pull-right sc-btn-margin-left">
+
+              <!-- <div class="ion-loading-c ng-hide" data-ng-show="vm.composeMessageVars.postMsgInProcess"></div> -->
+              <div sc-loading-indicator="{{vm.composeMessageVars.postMsgInProcess}}" ></div>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </form>
+    </div>
+
+  </ion-content>
+</ion-view>

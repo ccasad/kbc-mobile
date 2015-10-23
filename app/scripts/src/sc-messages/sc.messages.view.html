@@ -1,0 +1,45 @@
+<ion-view>
+  <ion-nav-title>
+    <span data-ng-bind="::vm.messageStreamVars.title"></span>
+  </ion-nav-title>
+
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-compose" data-ng-click="vm.composeMessage()"></button><!-- ion-ios-compose-outline -->
+    <button class="button button-icon icon ion-funnel sc-icon-small" data-ng-click="vm.showFilters();"></button>
+  </ion-nav-buttons>
+
+  <ion-content class="padding sc-content" delegate-handle="messageStream">
+
+    <ion-refresher
+      pulling-text="Release to refresh..."
+      pulling-icon="ion-arrow-down-c"
+      on-refresh="vm.refreshMessageStream()">
+    </ion-refresher>
+
+    <!-- Load Message template file -->
+    <div data-ng-include src="::vm.messageStreamVars.messageTemplate" ></div>
+    <!--  <div data-ng-include src="'scripts/src/sc-messages/sc.message.view.html'" ></div> -->
+
+    <div class="text-center small text-warning" data-ng-class="{'hidden': vm.messageStreamVars.showMoreMessagesLink == true}">
+      <p class="well well-sm sc-strong" data-ng-show="vm.messageStreamVars.noMessagesText" data-ng-bind="vm.messageStreamVars.noMessagesText"></p>
+    </div>
+
+    <ion-infinite-scroll
+      data-ng-if="vm.messageStreamVars.showMoreMessagesLink"
+      icon="ion-loading-c"
+      on-infinite="vm.showMoreMessages()"
+      distance="1%">
+    </ion-infinite-scroll>
+
+    <!-- <button data-ng-click="vm.scrollMessageStreamToTop()">
+        Scroll to top!
+    </button> -->
+
+   <!--  <ion-scroll delegate-handle="messageStream">
+      <button data-ng-click="vm.scrollMessageStreamToTop()">
+        Scroll to top!
+      </button>
+    </ion-scroll> -->
+
+  </ion-content>
+</ion-view>

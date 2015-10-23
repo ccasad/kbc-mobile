@@ -1,0 +1,136 @@
+<ion-modal-view class="sc-filters">
+  <ion-header-bar class="bar-assertive">
+    <div class="button button-clear" ng-click="vm.hideFilters();">
+      <span class="icon ion-ios-close"></span>
+    </div>
+    <div class="button button-clear" ng-click="vm.clearFilters();">
+      <span class="icon ion-refresh"></span>
+    </div>
+    <h1 class="title"></h1>
+    <div class="button button-clear" ng-click="vm.applyFilters();">
+      <span class="icon ion-checkmark"></span>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+
+    <ul class="list">
+
+      <li>
+        <!--<label class="item item-divider item-input">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input name="search" type="text" placeholder="Search...">
+        </label> -->
+        <div class="item item-divider">
+          <form id="searchMessagesForm" name="searchMessagesForm" role="form"  data-ng-submit="(vm.searchTextUpdate && !searchMessagesForm.$invalid) && vm.filterMessagesByProperties($event); vm.searchTextUpdate = false;">
+            <div data-ng-class="{ 'has-error' : searchMessagesForm.searchMessages.$invalid && !searchMessagesForm.searchMessages.$pristine }">
+              <div class="input-group">
+                <label for="searchMessages" class="sr-only">Search</label>
+                <input title="Please enter valid search term with minimum 3 characters" type="text" placeholder="Search..." id="searchMessages" name="searchMessages" data-ng-change="vm.searchTextUpdate = true;" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.propFilters.searchText" data-ng-minlength="3" class="form-control sc-message-stream-search-filter" >
+                <span title="Search" class="input-group-addon" data-ng-click="(vm.searchTextUpdate && !searchMessagesForm.$invalid) && vm.filterMessagesByProperties($event); vm.searchTextUpdate = false;">
+                  <i class="icon ion-search"></i>
+                </span>
+              </div>
+              <p data-ng-show="searchMessagesForm.searchMessages.$invalid && !searchMessagesForm.searchMessages.$pristine" class="help-block small">Minimum 3 characters</p>
+              <input type="submit" data-ng-disabled="searchMessagesForm.$invalid" id="submit" value="Search" class="hidden" />
+            </div>
+          </form>
+        </div>
+      </li>
+
+      <li class="item item-divider item-input item-select">
+        <div class="input-label">
+          year:
+        </div>
+        <select id="year" name="year" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.year" class="" data-ng-options="year for year in vm.messageStreamVars.yearList" data-ng-change="vm.filterMessagesByProperties($event);" >
+        </select>
+      </li>
+
+      <li class="item item-divider item-input item-select" data-ng-show="vm.messageStreamVars.messageStreamFilterParams.year !== 'Recent'">
+        <div class="input-label">
+          Month:
+        </div>
+        <select id="month" name="month" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.month" class="" data-ng-options="vm.monthsList.indexOf(month) as month for month in vm.monthsList" data-ng-change="vm.filterMessagesByProperties($event);" >
+        </select>
+      </li>
+
+      <li class="item item-toggle">
+         Important
+         <label class="toggle toggle-assertive">
+           <input type="checkbox" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.propFilters.favoriteYN" data-ng-true-value="'Y'" data-ng-false-value="'N'" data-ng-change="vm.filterMessagesByProperties($event);">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+
+      <li class="item item-divider">Message Status</li>
+      <li>
+        <label class="item item-radio">
+          <input type="radio" name="msgStatus" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.propFilters.msgStatus" data-ng-change="vm.filterMessagesByProperties($event);" data-ng-value="0">
+          <div class="item-content">
+            All
+          </div>
+          <i class="radio-icon ion-checkmark"></i>
+        </label>
+      </li>
+      <li>
+        <label class="item item-radio">
+          <input type="radio" name="msgStatus" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.propFilters.msgStatus" data-ng-change="vm.filterMessagesByProperties($event);" data-ng-value="vm.getMessageConstant('MESSAGE_STATUS_READ')">
+          <div class="item-content">
+            Read
+          </div>
+          <i class="radio-icon ion-checkmark"></i>
+        </label>
+      </li>
+      <li>
+        <label class="item item-radio">
+          <input type="radio" name="msgStatus" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.propFilters.msgStatus" data-ng-change="vm.filterMessagesByProperties($event);" data-ng-value="vm.getMessageConstant('MESSAGE_STATUS_UNREAD')">
+          <div class="item-content">
+            UnRead
+          </div>
+          <i class="radio-icon ion-checkmark"></i>
+        </label>
+      </li>
+
+      <li class="item item-divider">Message Priority</li>
+      <li>
+        <label class="item item-radio">
+          <input type="radio" name="msgPriority" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.propFilters.msgPriority" data-ng-change="vm.filterMessagesByProperties($event);" data-ng-value="0">
+          <div class="item-content">
+            All
+          </div>
+          <i class="radio-icon ion-checkmark"></i>
+        </label>
+      </li>
+      <li>
+        <label class="item item-radio">
+          <input type="radio" name="msgPriority" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.propFilters.msgPriority" data-ng-change="vm.filterMessagesByProperties($event);" data-ng-value="vm.getMessageConstant('MESSAGE_PRIORITY_LOW')">
+          <div class="item-content text-success">
+            Low
+          </div>
+          <i class="radio-icon ion-checkmark text-success"></i>
+        </label>
+      </li>
+      <li>
+        <label class="item item-radio">
+          <input type="radio" name="msgPriority" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.propFilters.msgPriority" data-ng-change="vm.filterMessagesByProperties($event);" data-ng-value="vm.getMessageConstant('MESSAGE_PRIORITY_NORMAL')">
+          <div class="item-content text-info">
+            Normal
+          </div>
+          <i class="radio-icon ion-checkmark text-info"></i>
+        </label>
+      </li>
+      <li>
+        <label class="item item-radio">
+          <input type="radio" name="msgPriority" data-ng-model="vm.messageStreamVars.messageStreamFilterParams.propFilters.msgPriority" data-ng-change="vm.filterMessagesByProperties($event);" data-ng-value="vm.getMessageConstant('MESSAGE_PRIORITY_HIGH')">
+          <div class="item-content text-danger">
+            High
+          </div>
+          <i class="radio-icon ion-checkmark text-danger"></i>
+        </label>
+      </li>
+
+    </ul>
+
+  </ion-content>
+</ion-modal-view>
