@@ -1,7 +1,7 @@
-// scDoMobileApp
+// kbcMobileApp
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'scDoMobileApp' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'kbcMobileApp' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 (function() {
   'use strict';
@@ -14,7 +14,7 @@
 
   // Cross App Core Modules
   angular
-    .module('scDoMobileApp.core', [
+    .module('kbcMobileApp.core', [
 
       /* Angular Modules */
       'angular-storage',
@@ -34,7 +34,7 @@
       'monospaced.elastic',
 
       /* App ENV constants - generated via grunt as per ENV */
-      'scDoMobileApp.constants',
+      'kbcMobileApp.constants',
 
       /* 3rd-party Lib Wrapper Modules */
       'scLodash', // Lodash js lib as DI
@@ -44,23 +44,24 @@
 
   // Main App Core Modules
   angular
-    .module('scDoMobileApp', [
+    .module('kbcMobileApp', [
 
       /* Shared Modules */
-      'scDoMobileApp.core',
+      'kbcMobileApp.core',
 
       /* Feature Modules */
       'scAuth',
       'scStorage',
       'scLayout',
-      'scMessages',
-      'scJobs',
-      'scCircles',
+      //'scMessages',
+      //'scJobs',
+      //'scCircles',
+      'scStats',
       'scUserAccount',
     ]);
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .run(runBlock);
 
     runBlock.$inject = ['$ionicPlatform'];

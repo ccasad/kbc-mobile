@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('scJobs', [
+    .module('scStats', [
       'kbcMobileApp.core',
     ]);
 
   angular
-    .module('scJobs')
+    .module('scStats')
     .config(constantConfiguration)
     .config(routeConfiguration);
 
@@ -16,23 +16,23 @@
   function constantConfiguration(APP_GLOBALS) {
     angular
       .extend(APP_GLOBALS, {
-        appJobsModuleDir: 'sc-jobs/',
+        appStatsModuleDir: 'sc-stats/',
       });
   }
 
   routeConfiguration.$inject = ['$stateProvider', 'APP_GLOBALS'];
 
   function routeConfiguration($stateProvider, APP_GLOBALS) {
-    var componentPath = APP_GLOBALS.appModulesPath + APP_GLOBALS.appJobsModuleDir;
+    var componentPath = APP_GLOBALS.appModulesPath + APP_GLOBALS.appStatsModuleDir;
 
     $stateProvider
-      .state('user.jobs', {
+      .state('user.stats-list', {
         //cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
-        url: '/jobs',
+        url: '/stats',
         views: {
-          'user-jobs': {
-            templateUrl: componentPath+'sc.jobs.view.html',
-            controller: 'ScJobsCtrl as vm'
+          'user-stats': {
+            templateUrl: componentPath+'sc.stats.view.html',
+            controller: 'ScStatsCtrl as vm'
           }
         }
       });

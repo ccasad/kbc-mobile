@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp')
+    .module('kbcMobileApp')
     .config(routeConfiguration);
 
   routeConfiguration.$inject = ['$stateProvider', '$urlRouterProvider', 'scAuthPermissionsProvider', 'APP_GLOBALS'];

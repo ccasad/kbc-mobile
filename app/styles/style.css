@@ -13,6 +13,41 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 input, button, select, textarea {
   font-family: "Roboto", "Helvetica Neue", sans-serif;
 }
+
+.button.button-balanced {
+  border-color: #7B8738;
+  background-color: #7B8738;
+  color: #fff;
+}
+.toggle.toggle-balanced input:checked + .track {
+  border-color: #7B8738;
+  background-color: #7B8738;
+}
+.bar.bar-assertive {
+  background-color: #D01E2C;
+  border-color: #D01E2C;
+  color: white;
+  font-weight: bold;
+}
+.bar-assertive .button {
+  color: white;
+}
+ion-tabs.tabs-color-active-assertive .tab-item.tab-item-active, ion-tabs.tabs-color-active-assertive .tab-item.active, ion-tabs.tabs-color-active-assertive .tab-item.activated {
+  color: #D01E2C;
+}
+.bar.bar-balanced {
+  background-color: #7B8738;
+  border-color: #7B8738;
+  color: white;
+  font-weight: bold;
+}
+.bar-balanced .button {
+  color: white;
+}
+ion-tabs.tabs-color-active-balanced .tab-item.tab-item-active, ion-tabs.tabs-color-active-balanced .tab-item.active, ion-tabs.tabs-color-active-balanced .tab-item.activated {
+  color: #7B8738;
+}
+/*
 .bar.bar-assertive {
   background-color: #2e2e77;
   border-color: #2e2e77;
@@ -25,6 +60,7 @@ input, button, select, textarea {
 ion-tabs.tabs-color-active-assertive .tab-item.tab-item-active, ion-tabs.tabs-color-active-assertive .tab-item.active, ion-tabs.tabs-color-active-assertive .tab-item.activated {
   color: #2e2e77;
 }
+*/
 .item-avatar img{
   border: 1px solid #c5c5c5;
 }
@@ -169,7 +205,7 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
   margin-left: 0;
 }
 .sc-login-container {
-  background-color:#2e2e77;
+  background-color:#7B8738;
 }
 .sc-login-box {
   width: 80%;

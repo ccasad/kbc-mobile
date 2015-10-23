@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp')
+    .module('kbcMobileApp')
     .config(scIonicConfiguration)
     .config(scHttpConfiguration)
     .run(scRunBlock);
@@ -179,7 +179,7 @@
   } // End of scRunBlock
 
   // angular
-  //   .module('scDoMobileApp')
+  //   .module('kbcMobileApp')
   //   .factory('scHttpInterceptor', scHttpInterceptorFactory);
 
   // scHttpInterceptorFactory.$inject = ['scUser'];

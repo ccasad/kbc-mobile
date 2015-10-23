@@ -1,7 +1,7 @@
 // (function(){
 //   'use strict';
 
-//   angular.module('scDoMobileApp.core')
+//   angular.module('kbcMobileApp.core')
 //     .factory('scLog', logFactory);
 
 //   logFactory.$inject = ['$http', 'APP_GLOBALS', 'scUtility',];

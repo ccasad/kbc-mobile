@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .filter('scUrlToJs', scUrlToJs);
 
   scUrlToJs.$inject = ['$sce'];

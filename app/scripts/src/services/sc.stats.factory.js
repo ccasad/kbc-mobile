@@ -3,12 +3,12 @@
 
   angular
     .module('kbcMobileApp.core')
-    .factory('scJobs', scJobsFactory);
+    .factory('scStats', scStatsFactory);
 
-  scJobsFactory.$inject = ['$http', 'APP_GLOBALS', 'scUtility', 'scUser'];
+  scStatsFactory.$inject = ['$http', 'APP_GLOBALS', 'scUtility', 'scUser'];
 
   /* @ngInject */
-  function scJobsFactory($http, APP_GLOBALS, scUtility, scUser) {
+  function scStatsFactory($http, APP_GLOBALS, scUtility, scUser) {
     var scJobs = {
       getJobsList: getJobsList,
     };

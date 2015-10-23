@@ -37,7 +37,7 @@ module.exports = function (grunt) {
         space: '  ',
         // wrap: '"use strict";\n\n {%= __ngModule %}',
         wrap: ' (function () { \n \'use strict\'; \n\n // Grunt generated file. Do not update \n\n {%= __ngModule %} \n\n }()); ',
-        name: 'scDoMobileApp.constants',
+        name: 'kbcMobileApp.constants',
         // deps: ['dep1', 'dep2'],
         dest: '<%= yeoman.app %>/<%= yeoman.scripts %>/src/sc.app.environment.config.js'
       },

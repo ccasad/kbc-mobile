@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .factory('scTip', scTipFactory);
 
   scTipFactory.$inject = ['APP_GLOBALS', 'scUtility', '$http', '$filter', '_'];

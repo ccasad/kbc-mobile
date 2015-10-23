@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .constant('APP_GLOBALS', {
       // protocol: 'http://',
       // host: 'vm-centos',   // this should be mycareergateway.com in production and mcgp1-dev-portal.hvcp.local for DEV ENV

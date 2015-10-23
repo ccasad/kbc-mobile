@@ -3,7 +3,7 @@
 
   angular
     .module('scCircles', [
-      'scDoMobileApp.core',
+      'kbcMobileApp.core',
     ]);
 
   angular

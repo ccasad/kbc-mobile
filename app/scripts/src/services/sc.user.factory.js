@@ -4,7 +4,7 @@
   /*jshint strict:false, bitwise:false, validthis: true */
 
   angular
-  .module('scDoMobileApp.core')
+  .module('kbcMobileApp.core')
   .factory('scUser', userFactory);
 
   userFactory.$inject = ['scStorage', 'scAuthPermissions', 'APP_GLOBALS', '_', 'scUtility', '$http'];

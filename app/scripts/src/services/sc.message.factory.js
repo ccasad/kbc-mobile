@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .factory('scMessage', scMessageFactory);
 
   // ToDo : remove APP_GLOBALS DI, use via utility functions

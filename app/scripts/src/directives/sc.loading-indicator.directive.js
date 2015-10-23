@@ -3,7 +3,7 @@
 
   // <div sc-loading-indicator="{{loading}}"></div>
   angular
-  .module('scDoMobileApp.core')
+  .module('kbcMobileApp.core')
   .directive('scLoadingIndicator', scLoadingIndicator);
 
   scLoadingIndicator.$inject = [];

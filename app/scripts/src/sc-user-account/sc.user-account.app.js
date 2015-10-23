@@ -3,7 +3,7 @@
 
   angular
     .module('scUserAccount', [
-      'scDoMobileApp.core',
+      'kbcMobileApp.core',
     ]);
 
   angular

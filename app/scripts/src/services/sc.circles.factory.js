@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .factory('scCircles', scCirclesFactory);
 
   scCirclesFactory.$inject = ['$http', 'scUtility', 'scAlert', '_'];

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .factory('scAuth', authFactory);
 
   authFactory.$inject = ['$http', 'APP_GLOBALS', '$state', 'scUser', 'scStorage', 'scUtility', 'auth', '_', 'scAlert'];

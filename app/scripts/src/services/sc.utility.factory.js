@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('scDoMobileApp.core')
+        .module('kbcMobileApp.core')
         .factory('scUtility', scUtilityFactory);
 
     scUtilityFactory.$inject = ['APP_ENV_GLOBALS', 'APP_GLOBALS', '$filter', '$ionicHistory', '$q', '$rootScope'];

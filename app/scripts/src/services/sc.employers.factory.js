@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .factory('scEmployers', scEmployersFactory);
 
   scEmployersFactory.$inject = ['$http', 'APP_GLOBALS', 'scUtility', 'scUser'];

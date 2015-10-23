@@ -3,7 +3,7 @@
 
   angular
     .module('scMessages', [
-      'scDoMobileApp.core',
+      'kbcMobileApp.core',
     ]);
 
   angular

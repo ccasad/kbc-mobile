@@ -4,7 +4,7 @@
   // <div data-sc-avatar-letter="sc-avatar-letter" data-avatar-class="sc-inline-block" data-avatar-size="lg" data-background-class="warning" data-ng-bind="headerVm.user.firstName.charAt(0)"></div>
 
   angular
-  .module('scDoMobileApp.core')
+  .module('kbcMobileApp.core')
   .directive('scAvatarLetter', scAvatarLetter);
 
   scAvatarLetter.$inject = [];

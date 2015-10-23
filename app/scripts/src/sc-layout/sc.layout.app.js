@@ -3,7 +3,7 @@
 
   angular
     .module('scLayout', [
-      'scDoMobileApp.core',
+      'kbcMobileApp.core',
     ]);
 
   angular

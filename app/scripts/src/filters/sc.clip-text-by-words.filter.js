@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .filter('scClipTextByWords', scClipTextByWords);
 
   scClipTextByWords.$inject = [];

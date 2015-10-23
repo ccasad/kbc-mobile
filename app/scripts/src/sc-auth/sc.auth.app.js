@@ -3,7 +3,7 @@
 
   angular
     .module('scAuth', [
-      'scDoMobileApp.core',
+      'kbcMobileApp.core',
     ]);
 
   angular

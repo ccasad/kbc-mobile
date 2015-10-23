@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('scDoMobileApp.core')
+  angular.module('kbcMobileApp.core')
     .factory('scAlert', alertFactory);
 
   alertFactory.$inject = ['$rootScope', '$cordovaToast'];

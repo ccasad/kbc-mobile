@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-  .module('scStorage',['scDoMobileApp.core'])
+  .module('scStorage',['kbcMobileApp.core'])
   .factory('scStorage', ['store',
     function(store) {
-      return store.getNamespacedStore('scDoMobile');
+      return store.getNamespacedStore('kbcMobile');
     }
   ]);
 

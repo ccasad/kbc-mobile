@@ -4,7 +4,7 @@
   /*jshint strict:false, bitwise:false */
 
   angular
-    .module('scDoMobileApp.core')
+    .module('kbcMobileApp.core')
     .provider('scAuthPermissions', scAuthPermissions);
 
   scAuthPermissions.$inject = ['APP_GLOBALS'];
