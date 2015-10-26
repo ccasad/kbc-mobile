@@ -1,60 +1,40 @@
 <ion-view>
   <ion-nav-title>
-    <span>Stats</span>
+    <span>My Stats</span>
   </ion-nav-title>
 
   <ion-nav-buttons side="secondary" data-ng-show="vm.jobs.isFilterVisible">
     <button class="button button-icon icon ion-ios-settings-strong sc-icon-small" data-ng-click="vm.showFilters();"></button>
   </ion-nav-buttons>
 
-  <div class="bar bar-subheader sc-jobs-list" data-ng-if="vm.isCenterRepUser && vm.jobs.employers.length > 0">
-    <label class="item item-divider item-input item-select" >
-      <div class="input-label">
-        Employer:
-      </div>
-      <select id="employerId" name="employerId" data-ng-model="vm.jobs.employerId" data-ng-change="vm.getJobsList()" class="" data-ng-options="employer.id as employer.name for employer in vm.jobs.employers" >
-      </select>
-    </label>
-  </div>
-
-  <ion-content data-ng-class="{ 'has-subheader': vm.isCenterRepUser && vm.jobs.employers.length > 0 }">
-
-    <ion-refresher
-      pulling-text="Release to refresh..."
-      pulling-icon="ion-arrow-down-c"
-      on-refresh="vm.refreshJobsList()">
-    </ion-refresher>
+  <ion-content>
 
     <ion-list class="sc-jobs-list">
-      <!-- | orderBy:vm.jobs.sortBy -->
-      <ion-item data-ng-repeat="job in filteredJobs = (vm.jobs.list)"
-                class="item"
-                id="job-{{::job.jobId}}">
+      
+      <ion-item data-ng-repeat="stat in filteredStats = (vm.stats.list)" class="item" id="stat-{{::stat.statId}}">
 
-        <!-- Job START -->
         <div class="sc-job-content-wrapper">
-          <div class="sc-job-content">
+          <div class="sc-job-content"> 
 
-            <h2 class="sc-jobs-id pull-left" data-ng-bind-html="job.jobUrl | scUrlToJs:job.jobId"></h2>
-            <h2 data-ng-bind-html="job.jobUrl | scUrlToJs:job.jobTitle"></h2>
-            <p class="pull-left" data-ng-bind-html="::job.jobStatus"></p>
-            <p class="pull-right" data-ng-bind-html="::job.lastSentDate | scDateFormat"></p>
-
+            <strong class="sc-stats-name pull-left" data-ng-bind="stat.statName"></strong> 
+            <strong class="pull-right" data-ng-bind="::stat.statValue" data-ng-class="{'assertive': stat.isPersonalRecord}"></strong>
+            <br>
+            <span class="pull-left stable" data-ng-bind="::stat.statDate | scDateFormatNoTime"></span> 
+            <span class="pull-right stable sc-truncate" data-ng-bind="::stat.statInfo"></span>
           </div>
         </div>
-        <!-- MESSAGE END -->
 
       </ion-item>
     </ion-list>
 
-    <div class="card text-center small text-warning" data-ng-show="filteredJobs.length < 1 && !vm.jobs.loading">
-      <div class="item item-text-wrap" data-ng-bind="vm.jobs.noJobsText"></div>
+    <div class="card text-center small text-warning" data-ng-show="filteredStats.length < 1 && !vm.stats.loading">
+      <div class="item item-text-wrap" data-ng-bind="vm.jobs.noStatsText"></div>
     </div>
 
     <ion-infinite-scroll
-      data-ng-if="vm.jobs.showMoreJobsLink"
+      data-ng-if="vm.jobs.showMoreStatsLink"
       icon="ion-loading-c"
-      on-infinite="vm.getMoreJobsList()"
+      on-infinite="vm.getMoreStatsList()"
       distance="1%">
     </ion-infinite-scroll>
 

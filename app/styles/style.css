@@ -104,6 +104,9 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
 .sc-text-pre-wrap {
   white-space: pre-wrap;
 }
+.sc-btn-margin-top {
+  margin-top: 15px;
+}
 .sc-btn-margin-left {
   margin-left: 5px;
 }
@@ -444,3 +447,23 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
   padding-left: 10px;
 }
 /* End of Jobs */
+
+/* Stats */
+.sc-stats-name {
+  margin-right: 15px;
+  text-transform: uppercase;
+}
+/* End of Stats */
+
+.sc-center-text {
+  text-align: center;
+}
+.sc-truncate {
+  width: 125px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sc-form-button {
+  width: 80px;
+}

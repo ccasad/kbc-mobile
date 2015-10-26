@@ -9,15 +9,13 @@
   angular
     .module('scAuth')
     .run(authRunBlock)
-    .run(auth0RunBlock)
-    .config(authConfiguration)
     .config(routeConfiguration);
 
-  authRunBlock.$inject = ['$rootScope', 'scUser', '$state', 'APP_GLOBALS'];
+  authRunBlock.$inject = ['$rootScope', 'scUser', '$state'];
 
-  function authRunBlock($rootScope, scUser, $state, APP_GLOBALS) {
+  function authRunBlock($rootScope, scUser, $state) {
 
-    $rootScope.$on('$stateChangeStart', function(event, toState) {
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       var user = scUser.getRootUser();
       //$http.defaults.headers.common.USERTOKEN = user.token;
       if (!user.isAuthorized(toState.data.access)) {
@@ -25,92 +23,14 @@
         if(!user.isAuthenticated()) {
           $state.go('anon.login');
         } else {
-          $state.go(APP_GLOBALS.appDefaultUserRoute);
+          //$state.go(APP_GLOBALS.appDefaultUserRoute); 
+          //$state.go(APP_GLOBALS.appDefaultUserRoute, {}, {notify:false});
+          $state.go(toState.name, toParams, {notify: false}).then(function() {
+            $rootScope.$broadcast('$stateChangeSuccess', toState, toParams, fromState, fromParams);
+          });
         }
       }
     });
-
-  }
-
-  auth0RunBlock.$inject = ['auth', '$rootScope', 'store', 'jwtHelper'];
-
-  function auth0RunBlock(auth, $rootScope, store, jwtHelper) {
-
-    // Hook auth0-angular to all the events it needs to listen to
-    auth.hookEvents();
-
-    // ToDo: we don't need this since we are not using auth0 tokens as a user authorization
-    // This events gets triggered on refresh or URL change
-    $rootScope.$on('$locationChangeStart', function() {
-      if (!auth.isAuthenticated) {
-        var token = store.get('token');
-        if (token) {
-          if (!jwtHelper.isTokenExpired(token)) {
-            auth.authenticate(store.get('profile'), token);
-          } else {
-            // Either show Login page or use the refresh token to get a new idToken
-            // $location.path('/');
-            console.log('redirect to login');
-          }
-        }
-      }
-    });
-
-    // $rootScope.$on('$locationChangeStart', function() {
-    //   if (!auth.isAuthenticated) {
-    //     var token = store.get('token');
-    //     var refreshToken = store.get('refreshToken');
-    //     if (token) {
-    //       if (!jwtHelper.isTokenExpired(token)) {
-    //         auth.authenticate(store.get('profile'), token);
-    //       } else {
-    //         auth.refreshIdToken(refreshToken).then(function(idToken) {
-    //           store.set('token', idToken);
-    //           auth.authenticate(store.get('profile'), idToken);
-    //           return idToken;
-    //         });
-    //       }
-    //     }
-    //   }
-    // });
-
-  }
-
-  authConfiguration.$inject = ['authProvider', '$httpProvider', 'APP_GLOBALS', 'jwtInterceptorProvider'];
-
-  function authConfiguration(authProvider, $httpProvider, APP_GLOBALS, jwtInterceptorProvider) {
-
-    authProvider.init({
-      domain: APP_GLOBALS.auth0Domain,
-      clientID: APP_GLOBALS.auth0ClientId,
-      callbackURL: location.href,
-      loginState: 'anon.login'
-    });
-
-    // ToDo: we don't need this since we are not using auth0 tokens as a user authorization
-    // As JWTs expire, we'll use the refreshToken to get a new JWT if the one we have is expired.
-    jwtInterceptorProvider.tokenGetter =  ['store', 'jwtHelper', 'auth', function (store, jwtHelper, auth) {
-      var idToken = store.get('token');
-      var refreshToken = store.get('refreshToken');
-      // If no token return null
-      if (!idToken || !refreshToken) {
-        return null;
-      }
-      // If token is expired, get a new one
-      if (jwtHelper.isTokenExpired(idToken)) {
-        return auth.refreshIdToken(refreshToken).then(function(idToken) {
-          store.set('token', idToken);
-          return idToken;
-        });
-      } else {
-        return idToken;
-      }
-    }];
-
-    // As we're going to call an API we did,
-    // we need to make sure we send the JWT token we receive on the login on every request.
-    // For that, we need to do the add the jwtInterceptor to the list of $http interceptors.
-    $httpProvider.interceptors.push('jwtInterceptor');
 
   }
 

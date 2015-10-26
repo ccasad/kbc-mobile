@@ -32,6 +32,7 @@
       'ngCordova',
       'angular-capitalize-filter',
       'monospaced.elastic',
+      'formlyIonic',
 
       /* App ENV constants - generated via grunt as per ENV */
       'kbcMobileApp.constants',

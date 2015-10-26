@@ -5,10 +5,21 @@ navigation history that also transitions its views in and out.
 -->
 <ion-tabs class="tabs-icon-top tabs-color-active-balanced" data-ng-controller="ScTabsCtrl as vm">
 
-  <!-- Today Tab -->
-  <ion-tab title="Stats" icon-off="ion-arrow-graph-up-right" icon-on="ion-arrow-graph-up-right" data-ui-sref="user.stats-list">
+  <!-- My Stats Tab -->
+  <ion-tab title="My Stats" icon-off="ion-arrow-graph-up-right" icon-on="ion-arrow-graph-up-right" data-ui-sref="user.stats-list">
     <ion-nav-view name="user-stats"></ion-nav-view>
   </ion-tab>
+
+  <!-- Add Stat Tab -->
+  <ion-tab title="Add Stat" icon-off="ion-plus-circled" icon-on="ion-plus-circled" data-ui-sref="user.stats-add">
+    <ion-nav-view name="user-stats-add"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Account Tab -->
+  <ion-tab title="Account" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" data-ui-sref="user.account">
+    <ion-nav-view name="user-account"></ion-nav-view>
+  </ion-tab>
+
 
   <!-- Messages Tab -->
   <!--
@@ -42,10 +53,5 @@ navigation history that also transitions its views in and out.
     <ion-nav-view name="user-notifications"></ion-nav-view>
   </ion-tab>
   -->
-
-  <!-- Account Tab -->
-  <ion-tab title="Account" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" data-ui-sref="user.account">
-    <ion-nav-view name="user-account"></ion-nav-view>
-  </ion-tab>
 
 </ion-tabs>

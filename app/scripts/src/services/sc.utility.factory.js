@@ -34,7 +34,7 @@
         ////////////////
 
         function getMainUrl() {
-          var url = APP_ENV_GLOBALS.protocol + APP_ENV_GLOBALS.mainSubDomain + APP_ENV_GLOBALS.subDomainDelimiter + APP_ENV_GLOBALS.host; //  + '/'
+          var url = APP_ENV_GLOBALS.protocol + APP_ENV_GLOBALS.host; //  + '/'
           return url;
         }
 

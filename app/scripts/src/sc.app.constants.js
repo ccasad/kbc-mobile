@@ -12,7 +12,7 @@
       angelSubDomain: 'team',
       supportTeamSubDomain: 'team',
       baseUrl: '/',
-      restBaseUrl: '/sc.apirouter.php?route=',
+      restBaseUrl: '/kellysbc/api/',
       vcnBaseUrl: 'https://www.vcn.org',
       imageUrl: '/images/',
       auth0Domain: 'xpandmcg.auth0.com',
@@ -65,9 +65,14 @@
         'angel':{'typeId': 3, 'typeName': 'angel', 'name': 'Angel', 'connectionsPageBaseRoute': 'user.connections.angels'},
         'forum':{'typeId': 4, 'typeName': 'forum', 'name': 'Forum', 'connectionsPageBaseRoute': '', 'domainId': 13, 'catId': 20},
       },
+      formElements: [
+        {id: 1, name: 'Text', value: 'text'},
+        {id: 2, name: 'Number', value: 'number'},
+        {id: 3, date: 'Date', value: 'date'}
+      ],
       appModulesPath: 'scripts/src/',
       appDefaultRoute: 'anon.login',
-      appDefaultUserRoute: 'user.messages',
+      appDefaultUserRoute: 'user.account',
       googleAnalyticsAndroidKey: 'UA-63017146-7', // For Android
       googleAnalyticsIOSKey: 'UA-63017146-8', // For Ios
       googleAnalyticsKey: '', // For all other OS

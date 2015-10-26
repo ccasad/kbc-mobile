@@ -3,43 +3,85 @@
 
   angular
     .module('scStats')
-    .controller('ScStatsCtrl', ScJobsCtrl);
+    .controller('ScStatsCtrl', ScStatsCtrl);
 
-  ScJobsCtrl.$inject = ['scUser', 'scJobs', 'scStats', 'scAlert', '$ionicLoading', '$scope', '$ionicModal', 'APP_GLOBALS'];
+  ScStatsCtrl.$inject = ['scUser', 'scStats', 'scAlert', '$ionicLoading', '$scope', '$ionicModal', 'APP_GLOBALS'];
 
   /* @ngInject */
-  function ScJobsCtrl(scUser, scJobs, scStats, scAlert, $ionicLoading, $scope, $ionicModal, APP_GLOBALS) {
+  function ScStatsCtrl(scUser, scStats, scAlert, $ionicLoading, $scope, $ionicModal, APP_GLOBALS) {
     var vm = this;
 
-    var user = scUser.getRootUser();
+    //var user = scUser.getRootUser();
 
-    vm.jobs = {
+    vm.stats = {
       list: [],
-      noOfDays: 30,
+      skipNoRecords: 0,
       maxLimit: 15,
       orderByFieldList: [
-        {id: 'JobId', name: 'Latest', direction: 'DESC'},
-        {id: 'JobTitleText', name: 'Title', direction: 'ASC'},
-        {id: 'JobStatus', name: 'Status', direction: 'ASC'},
-        {id: 'LastSentDate', name: 'Last Sent Date', direction: 'DESC'},
-      ], // { "JobStatus", "JobTitleText", "EmployersJobId", "JobId", "JobStatusCode", "LastSentDate", "LastSentMethod", "OscName" }
-      skipNoRecords: 0,
-      orderByField : 'JobId',
+        {id: 'statId', name: 'Id', direction: 'DESC'},
+        {id: 'statName', name: 'Name', direction: 'ASC'},
+        {id: 'statDate', name: 'Date', direction: 'ASC'},
+        {id: 'statValue', name: 'Value', direction: 'ASC'},
+        {id: 'statInfo', name: 'Info', direction: 'DESC'},
+      ],
+      orderByField : 'statDate',
       orderByType: 'DESC',
-      jobStatusCode: '', // To search/filter by jobStatusCode
-      searchKeyword: '', // To search/filter by JobTitleText
-      jobId: '', // To search/filter by VOC Job Id
-      empJobId: '', // To search/filter by Employer’s Job id
+      // jobStatusCode: '', // To search/filter by jobStatusCode
+      // searchKeyword: '', // To search/filter by JobTitleText
+      // jobId: '', // To search/filter by VOC Job Id
+      // empJobId: '', // To search/filter by Employer’s Job id
       isFilterVisible: true,
-      showMoreJobsLink: false,
-      noJobsText: 'No Jobs Found',
+      noStatsText: 'No stats found',
       loading: true,
     };
 
-    vm.getJobsList = getJobsList;
-    vm.refreshJobsList = refreshJobsList;
-    vm.getMoreJobsList = getMoreJobsList;
-    vm.setJobsList = setJobsList;
+    vm.stats.formData = {};
+
+    vm.stats.formFields = [
+      {
+        key: 'statId',
+        type: 'select',
+        templateOptions: {
+          label: 'Stat',
+          options: [
+            {name: 'Push Ups', value: '1'},
+            {name: 'Sit Ups', value: '2'},
+            {name: 'Red Challenge', value: '3'},
+            {name: 'Dynamax', value: '4'},
+          ]
+        }
+      },
+      {
+        key: 'orderBy',
+        type: 'select',
+        initialValue: 'statDate',
+        templateOptions: {
+          label: 'Order By',
+          options: [
+            {name: 'Name', value: 'statName'},
+            {name: 'Date', value: 'statDate'},
+            {name: 'Value', value: 'statValue'}
+          ]
+        }
+      },
+      {
+        key: 'orderBy',
+        type: 'select',
+        initialValue: 'statDate',
+        templateOptions: {
+          label: 'Order By',
+          options: [
+            {name: 'Name', value: 'statName'},
+            {name: 'Date', value: 'statDate'},
+            {name: 'Value', value: 'statValue'}
+          ]
+        }
+      },
+    ];
+
+    vm.setStatsList = setStatsList;
+    vm.getMyStats = getMyStats;
+    vm.getMoreStatsList = getMoreStatsList;
     vm.showFilters = showFilters;
     vm.applyFilters = applyFilters;
     vm.hideFilters = hideFilters;
@@ -47,15 +89,34 @@
 
     ////////////
 
-    vm.setJobsList();
+    vm.setStatsList();
 
-    function setJobsList() {
+    function getMyStats() {
 
-      if(scUser.isCenterRep(user)){
-        vm.isCenterRepUser = true;
-      }else {
-        vm.getJobsList();
+      var userId = 1; //user.id;
+      var statId = (vm.statId === 'all') ? null : vm.statId;
+
+      var params = {
+        userId: userId,
+        statId: statId
+      };
+
+      return scStats.getAllUsersStats(params).then(function (response) {
+        vm.stats.list = response.data;
+        return vm.stats.list;
+      });
+    }
+
+    function getMoreStatsList() {
+      if(!vm.stats.loading && vm.stats.showMoreStatsLink && vm.stats.list.length > 0) {
+        vm.stats.skipNoRecords = vm.stats.skipNoRecords + vm.stats.maxLimit;
+        vm.getMyStats();
       }
+    }
+
+    function setStatsList() {
+
+      vm.getMyStats();
 
       $ionicModal.fromTemplateUrl( APP_GLOBALS.appModulesPath + APP_GLOBALS.appStatsModuleDir + 'sc.stats-filters-modal.view.html', {
         scope: $scope,
@@ -76,12 +137,12 @@
         // Execute action
       });
 
-    } // End of setJobsList
+    } // End of setStatsList
 
     function applyFilters() {
       $scope.modal.hide();
-      vm.jobs.skipNoRecords =  0;
-      vm.getJobsList();
+      vm.stats.skipNoRecords =  0;
+      vm.getMyStats();
     } // end of applyFilters
 
     function showFilters() {
@@ -90,83 +151,21 @@
 
     function hideFilters() {
       $scope.modal.hide();
-      // vm.jobs.skipNoRecords =  0;
-      // vm.getJobsList();
     } // end of hideFilters
 
     function clearFilters() {
-      vm.jobs.skipNoRecords =  0;
-      vm.jobs.orderByField = 'JobId';
-      vm.jobs.orderByType = 'DESC';
+      vm.stats.skipNoRecords =  0;
+      vm.stats.orderByField = 'StatDate';
+      vm.stats.orderByType = 'DESC';
 
-      vm.jobs.jobStatusCode = ''; // To search/filter by jobStatusCode
-      vm.jobs.searchKeyword = ''; // To search/filter by JobTitleText
-      vm.jobs.jobId = ''; // To search/filter by VOC Job Id
-      vm.jobs.empJobId = ''; // To search/filter by Employer’s Job id
+      // vm.stats.jobStatusCode = ''; // To search/filter by jobStatusCode
+      // vm.stats.searchKeyword = ''; // To search/filter by JobTitleText
+      // vm.stats.jobId = ''; // To search/filter by VOC Job Id
+      // vm.stats.empJobId = ''; // To search/filter by Employer’s Job id
 
-      vm.getJobsList();
+      vm.getMyStats();
       $scope.modal.hide();
     } // end of clearFilters
-
-    function refreshJobsList() {
-      vm.jobs.skipNoRecords =  0;
-
-      vm.getJobsList();
-    }
-
-    function getMoreJobsList() {
-      if(!vm.jobs.loading && vm.jobs.showMoreJobsLink && vm.jobs.list.length > 0) {
-      vm.jobs.skipNoRecords =  vm.jobs.skipNoRecords + vm.jobs.maxLimit;
-
-      vm.getJobsList();
-      }
-    }
-
-    function getJobsList() {
-      var jobsParams = {
-        userId: user.id,
-        noOfDays: vm.jobs.noOfDays,
-        maxLimit: vm.jobs.maxLimit,
-        employerId: vm.jobs.employerId > 0 ? vm.jobs.employerId : 0,
-        skipNoRecords: vm.jobs.skipNoRecords,
-        orderByField: vm.jobs.orderByField,
-        orderByType: vm.jobs.orderByType,
-        jobStatusCode: vm.jobs.jobStatusCode,
-        searchKeyword: vm.jobs.searchKeyword,
-        jobId: vm.jobs.jobId,
-        empJobId: vm.jobs.empJobId,
-      };
-
-      vm.jobs.loading = true;
-      $ionicLoading.show();
-
-      scJobs.getJobsList(jobsParams).then(function(response){
-        if (response.status && response.status.success) {
-          if(vm.jobs.list.length > 0 && vm.jobs.skipNoRecords > 0){
-            vm.jobs.list = vm.jobs.list.concat(response.data.jobslist);
-          }else {
-            vm.jobs.list = response.data.jobslist;
-          }
-
-          if(response.data.jobsTotalCount <= vm.jobs.list.length) {
-            vm.jobs.showMoreJobsLink = false;
-          }else {
-            vm.jobs.showMoreJobsLink = true;
-          }
-
-        } else {
-          scAlert.error('Error in getting jobs data. Please try again');
-        }
-        vm.jobs.loading = false;
-      }).finally(function() {
-        vm.jobs.loading = false;
-        $ionicLoading.hide();
-        $scope.$broadcast('scroll.infiniteScrollComplete');
-        $scope.$broadcast('scroll.refreshComplete');
-      });
-
-    } // End of getJobsList
-
   }
 
 })();
