@@ -47,9 +47,9 @@ module.exports = function (grunt) {
           APP_ENV_GLOBALS: {
             name: 'development',
             protocol: 'http://',
-            host: 'mcgp1-dev-portal.hvcp.local',
-            subDomainDelimiter: '-',  // this should be a period for production
-            mainSubDomain: 'do',
+            host: 'localhost:8888',
+            subDomainDelimiter: '',  // this should be a period for production
+            mainSubDomain: '',
             debug: true,
           }
         }
@@ -59,9 +59,9 @@ module.exports = function (grunt) {
           APP_ENV_GLOBALS: {
             name: 'production',
             protocol: 'http://',
-            host: 'mycareergateway.com', // this should be mycareergateway.com for production
-            subDomainDelimiter: '.',  // this should be a period for production
-            mainSubDomain: 'directoutreach',
+            host: 'localhost:8888', // this should be mycareergateway.com for production
+            subDomainDelimiter: '',  // this should be a period for production
+            mainSubDomain: '',
             debug: false,
           }
         }
