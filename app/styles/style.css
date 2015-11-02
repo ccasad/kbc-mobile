@@ -219,13 +219,13 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
   margin: 15px 0;
 }
 .sc-login-logo-container {
-  height: 200px;
+  height: 170px;
   margin-bottom: 30px;
   text-align:center;
 }
 .sc-login-logo {
   width: auto;
-  height: 200px;
+  height: 170px;
 }
 .sc-login-social-container {
   margin-bottom: 10px;

@@ -3,7 +3,7 @@
 
 		<div class="row row-center sc-row-center">
       <div class="col" data-ng-class="{'sc-login-logo-container' : vm.isAnimationAvailable}">
-        <img src="images/logo_white.png" class="sc-login-logo" data-ng-class="{'sc-login-logo' : vm.isAnimationAvailable}" data-ng-if="vm.logo" />
+        <img src="images/kellysbc.gif" class="sc-login-logo" data-ng-class="{'sc-login-logo' : vm.isAnimationAvailable}" data-ng-if="vm.logo" />
       </div>
 		</div>
 
@@ -22,17 +22,6 @@
 	  		</div>
   		</div>
   	</div>
-
-		<div class="row row-center sc-row-center">
-  		<div class="col">
-				<div class="sc-login-text">
-					<strong>OR Sign in with</strong>
-				</div>
-				<div class="sc-login-social-container">
-					<i data-ng-repeat="socialAccount in vm.socialAccounts" data-ng-click="vm.loginWithSocialAccount(socialAccount.id)" class="icon ion-social-{{::socialAccount.classTitle}} sc-login-social-icon"></i>
-				</div>
-			</div>
-		</div>
 
 	</ion-content>
 </ion-view>

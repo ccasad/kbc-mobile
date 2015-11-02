@@ -7,9 +7,9 @@
   .module('kbcMobileApp.core')
   .factory('scUser', userFactory);
 
-  userFactory.$inject = ['scStorage', 'scAuthPermissions', 'APP_GLOBALS', '_', 'scUtility', '$http'];
+  userFactory.$inject = ['scStorage', 'scAuthPermissions', 'scAlert', 'APP_GLOBALS', '_', 'scUtility', '$http'];
 
-  function userFactory(scStorage, scAuthPermissions, APP_GLOBALS, _, scUtility, $http) {
+  function userFactory(scStorage, scAuthPermissions, scAlert, APP_GLOBALS, _, scUtility, $http) {
 
     scUser.userRoles = scAuthPermissions.userRoles;
     scUser.accessLevels = scAuthPermissions.accessLevels;
@@ -24,6 +24,7 @@
     scUser.getRootUser = getRootUser;
     scUser.updateRootUser = updateRootUser;
     scUser.getUserById = getUserById;
+    scUser.updateAccount = updateAccount;
 
     scUser.prototype = {
       isAuthenticated: isAuthenticated,
@@ -154,7 +155,6 @@
       var promise = scUtility.getDefaultPromise();
 
       if (userId) {
-
         var url = scUtility.getRestBaseUrl() + 'user/';
 
         promise = $http.get(url + userId)
@@ -167,13 +167,34 @@
       function success(response) {
         return response.data.data;
       }
-
       function failed(error) {
         return {result: error};
       }
-
     }
 
+    function updateAccount(params) {
+
+      var user = scUser.getRootUser();
+
+      params.userId = user.id;
+
+      if (user.id) {
+        return $http.post(scUtility.getRestBaseUrl() + 'update-account', params)
+          .then(complete)
+          .catch(failed);
+      } else {
+        failed();
+        return scUtility.getDefaultPromise();
+      }
+      
+      function complete(response) {
+        return response.data;
+      }
+
+      function failed() {
+        scAlert.error('There was an issue saving your account information.');
+      }
+    }
   }
 
 })();

@@ -20,6 +20,17 @@
     	formFields: [],
     };
 
+    // http://stackoverflow.com/questions/8318236/regex-pattern-for-hhmmss-time-string
+    // vm.stats.timeValidator = {
+    //   time: {
+    //     expression: function(viewValue, modelValue) {
+    //       var value = modelValue || viewValue;
+    //       return /^(?:([0-5]?\d):)?([0-5]?\d)$/.test(value);
+    //     },
+    //     message: '$viewValue + " is not a valid time"'
+    //   }
+    // };
+
     vm.stats.fields = {
   		statDate: {
 	      key: 'statDate',
@@ -94,8 +105,12 @@
     	vm.stats.fields.statValue.templateOptions.label = 'Value for ' + stat.name + ' *';
     	vm.stats.fields.statValue.templateOptions.placeholder = stat.description;
 
+    	if (stat.formElementId === 6) {
+    		vm.stats.fields.statValue.validators = vm.stats.timeValidator;
+    	}
+
     	vm.stats.fields.statInfo.templateOptions.label = 'Additional info for ' + stat.name;
-    	vm.stats.fields.statInfo.templateOptions.placeholder = '(i.e. weight of dynamax ball)';
+    	vm.stats.fields.statInfo.templateOptions.placeholder = '(i.e. lbs, inches, )';
 
     	setStatFields();
     }

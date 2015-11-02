@@ -27,7 +27,7 @@
 
     $stateProvider
       .state('user.stats-list', {
-        //cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
+        cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
         url: '/stats',
         views: {
           'user-stats': {

@@ -68,11 +68,12 @@
       formElements: [
         {id: 1, name: 'Text', value: 'text'},
         {id: 2, name: 'Number', value: 'number'},
-        {id: 3, date: 'Date', value: 'date'}
+        {id: 3, date: 'Date', value: 'date'},
+        {id: 6, date: 'Text', value: 'text'}
       ],
       appModulesPath: 'scripts/src/',
       appDefaultRoute: 'anon.login',
-      appDefaultUserRoute: 'user.account',
+      appDefaultUserRoute: 'user.stats-list',
       googleAnalyticsAndroidKey: 'UA-63017146-7', // For Android
       googleAnalyticsIOSKey: 'UA-63017146-8', // For Ios
       googleAnalyticsKey: '', // For all other OS
