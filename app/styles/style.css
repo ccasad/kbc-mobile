@@ -145,7 +145,12 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
 .sc-content {
   background-color: #ECECEC;
 }
-
+.sc-muted {
+  color: #ADADAD;
+}
+.sc-text-right {
+  text-align: right;
+}
 .sc-avatar-letter-lg {
   border-radius: 50%;
   width: 80px;
@@ -219,13 +224,13 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
   margin: 15px 0;
 }
 .sc-login-logo-container {
-  height: 170px;
+  height: 140px;
   margin-bottom: 30px;
   text-align:center;
 }
 .sc-login-logo {
   width: auto;
-  height: 170px;
+  height: 140px;
 }
 .sc-login-social-container {
   margin-bottom: 10px;
@@ -248,9 +253,12 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
   height: 100% !important;
 }
 .sc-login-container .scroll {
+  /*
   display: table-cell;
   vertical-align: middle;
+  */
   text-align: center;
+  margin-top: 50px;
 }
 /* End of Overrides */
 

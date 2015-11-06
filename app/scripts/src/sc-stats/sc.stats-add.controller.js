@@ -5,10 +5,10 @@
     .module('scStats')
     .controller('ScStatsAddCtrl', ScStatsAddCtrl);
 
-  ScStatsAddCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state'];
+  ScStatsAddCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state', '$window'];
 
   /* @ngInject */
-  function ScStatsAddCtrl(scStats, scUser, scAlert, _, $state) {
+  function ScStatsAddCtrl(scStats, scUser, scAlert, _, $state, $window) {
     var vm = this;
 
     vm.user = scUser.getRootUser();
@@ -92,7 +92,7 @@
 	  vm.getStats = getStats;
 	  vm.getStat = getStat;
 	  vm.saveStat = saveStat;
-	  vm.cancel = cancel;
+	  vm.clearForm = clearForm;
 	  
     ////////////
 
@@ -174,8 +174,8 @@
     	}
     }
 
-    function cancel() {
-
+    function clearForm() {
+      $window.location.reload();
     }
   }
 

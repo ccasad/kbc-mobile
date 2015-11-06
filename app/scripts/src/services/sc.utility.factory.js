@@ -5,10 +5,10 @@
         .module('kbcMobileApp.core')
         .factory('scUtility', scUtilityFactory);
 
-    scUtilityFactory.$inject = ['APP_ENV_GLOBALS', 'APP_GLOBALS', '$filter', '$ionicHistory', '$q', '$rootScope'];
+    scUtilityFactory.$inject = ['APP_ENV_GLOBALS', 'APP_GLOBALS', '$filter', '$ionicHistory', '$q', '$rootScope', '_'];
 
     /* @ngInject */
-    function scUtilityFactory(APP_ENV_GLOBALS, APP_GLOBALS, $filter, $ionicHistory, $q, $rootScope) {
+    function scUtilityFactory(APP_ENV_GLOBALS, APP_GLOBALS, $filter, $ionicHistory, $q, $rootScope, _) {
         var scUtility = {
             getMainUrl: getMainUrl,
             getRestBaseUrl: getRestBaseUrl,
@@ -40,6 +40,11 @@
 
         function getRestBaseUrl() {
           var url = scUtility.getMainUrl() + APP_GLOBALS.restBaseUrl;
+
+          if (_.includes(APP_GLOBALS.restBaseUrl, 'http')) {
+            url = APP_GLOBALS.restBaseUrl;
+          }
+          
           return url;
         }
 

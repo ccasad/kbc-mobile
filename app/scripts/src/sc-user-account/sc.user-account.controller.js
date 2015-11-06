@@ -54,6 +54,7 @@
     vm.setFormFields = setFormFields;
     vm.updateAccount = updateAccount;
     vm.signOut = signOut;
+    vm.clearForm = clearForm;
 
     ///////////////
 
@@ -80,7 +81,7 @@
 
         return scUser.updateAccount(params).then(function() {
           scAlert.success('You password has been saved');
-          vm.account.showForm = false;
+          vm.clearForm();
         });
       } else {
         scAlert.error('All fields are required.');
@@ -102,6 +103,12 @@
       });
     }
 
+    function clearForm() {
+      vm.account.formData.currentPassword = '';
+      vm.account.formData.newPassword = '';
+      vm.account.formData.confirmPassword = '';
+      vm.account.showForm = false;
+    }
   }
 
 })();
