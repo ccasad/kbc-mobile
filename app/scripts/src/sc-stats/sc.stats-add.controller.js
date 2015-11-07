@@ -20,17 +20,6 @@
     	formFields: [],
     };
 
-    // http://stackoverflow.com/questions/8318236/regex-pattern-for-hhmmss-time-string
-    // vm.stats.timeValidator = {
-    //   time: {
-    //     expression: function(viewValue, modelValue) {
-    //       var value = modelValue || viewValue;
-    //       return /^(?:([0-5]?\d):)?([0-5]?\d)$/.test(value);
-    //     },
-    //     message: '$viewValue + " is not a valid time"'
-    //   }
-    // };
-
     vm.stats.fields = {
   		statDate: {
 	      key: 'statDate',
@@ -169,6 +158,10 @@
 
     		return scStats.updateUserStat(params).then(function() {
 	        scAlert.success('The stat has been saved');
+          vm.stats.formData.statDate = null;
+          vm.stats.formData.statType = null;
+          vm.stats.formData.statValue = null;
+          vm.stats.formData.statInfo = null;
 	        $state.go('user.stats-list');
 	      });
     	}

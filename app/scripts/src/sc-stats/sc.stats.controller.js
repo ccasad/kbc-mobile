@@ -5,18 +5,21 @@
     .module('scStats')
     .controller('ScStatsCtrl', ScStatsCtrl);
 
-  ScStatsCtrl.$inject = ['scUser', 'scStats', 'scAlert', '$ionicLoading', '$scope', '$ionicModal', 'APP_GLOBALS'];
+  ScStatsCtrl.$inject = ['scUser', 'scStats', 'scAlert', '$ionicLoading', '$scope', '$ionicModal', 'APP_GLOBALS', '_'];
 
   /* @ngInject */
-  function ScStatsCtrl(scUser, scStats, scAlert, $ionicLoading, $scope, $ionicModal, APP_GLOBALS) {
+  function ScStatsCtrl(scUser, scStats, scAlert, $ionicLoading, $scope, $ionicModal, APP_GLOBALS, _) {
     var vm = this;
 
-    //var user = scUser.getRootUser();
+    var user = scUser.getRootUser();
 
     vm.stats = {
       list: [],
+      statList: [],
+      formFields: [],
+      typeOptions: [],
       skipNoRecords: 0,
-      maxLimit: 15,
+      maxLimit: 5,
       orderByFieldList: [
         {id: 'statId', name: 'Id', direction: 'DESC'},
         {id: 'statName', name: 'Name', direction: 'ASC'},
@@ -26,10 +29,6 @@
       ],
       orderByField : 'statDate',
       orderByType: 'DESC',
-      // jobStatusCode: '', // To search/filter by jobStatusCode
-      // searchKeyword: '', // To search/filter by JobTitleText
-      // jobId: '', // To search/filter by VOC Job Id
-      // empJobId: '', // To search/filter by Employer’s Job id
       isFilterVisible: true,
       noStatsText: 'No stats found',
       loading: true,
@@ -37,24 +36,20 @@
 
     vm.stats.formData = {};
 
-    vm.stats.formFields = [
-      {
+    vm.stats.fields = {
+      statId: {
         key: 'statId',
         type: 'select',
+        defaultValue: 'all',
         templateOptions: {
           label: 'Stat',
-          options: [
-            {name: 'Push Ups', value: '1'},
-            {name: 'Sit Ups', value: '2'},
-            {name: 'Red Challenge', value: '3'},
-            {name: 'Dynamax', value: '4'},
-          ]
+          options: []
         }
       },
-      {
+      orderBy: {
         key: 'orderBy',
         type: 'select',
-        initialValue: 'statDate',
+        defaultValue: 'statDate',
         templateOptions: {
           label: 'Order By',
           options: [
@@ -64,22 +59,57 @@
           ]
         }
       },
-      {
-        key: 'orderBy',
-        type: 'select',
-        initialValue: 'statDate',
+      orderDir: {
+        key: 'orderDir',
+        type: 'toggle',
         templateOptions: {
-          label: 'Order By',
-          options: [
-            {name: 'Name', value: 'statName'},
-            {name: 'Date', value: 'statDate'},
-            {name: 'Value', value: 'statValue'}
-          ]
+          label: 'Ascending Order',
+          toggleClass: 'balanced'
         }
-      },
-    ];
+      }
+    };
+
+    // vm.stats.formFields = [
+    //   {
+    //     key: 'statId',
+    //     type: 'select',
+    //     defaultValue: 'all',
+    //     templateOptions: {
+    //       label: 'Stat',
+    //       options: []
+    //     },
+    //     // controller: /* @ngInject */ function($scope, scStats) {
+    //     //   $scope.to.loading = scStats.getStats().then(function(response){
+    //     //     $scope.options.templateOptions.options = response.data;
+    //     //     return response;
+    //     //   });
+    //     // }
+    //   },
+    //   {
+    //     key: 'orderBy',
+    //     type: 'select',
+    //     defaultValue: 'statDate',
+    //     templateOptions: {
+    //       label: 'Order By',
+    //       options: [
+    //         {name: 'Name', value: 'statName'},
+    //         {name: 'Date', value: 'statDate'},
+    //         {name: 'Value', value: 'statValue'}
+    //       ]
+    //     }
+    //   },
+    //   {
+    //     key: 'orderDir',
+    //     type: 'toggle',
+    //     templateOptions: {
+    //       label: 'Ascending Order',
+    //       toggleClass: 'balanced'
+    //     }
+    //   }
+    // ];
 
     vm.setStatsList = setStatsList;
+    vm.getStats = getStats;
     vm.getMyStats = getMyStats;
     vm.getMoreStatsList = getMoreStatsList;
     vm.showFilters = showFilters;
@@ -89,16 +119,68 @@
 
     ////////////
 
+    getStatOptions();
     vm.setStatsList();
+
+    function getStats() {
+      return scStats.getStats().then(function (response) {
+        vm.stats.statList = response.data;
+        return vm.stats.statList;
+      });
+    }
+
+    // function getStats() {
+    //   return scStats.getStats().then(function (response) {
+    //     var data = response.data;
+    //     var options = [];
+
+    //     _.each(data, function(stat) {
+    //       options.push({name: stat.name, value: stat.id});
+    //     });
+
+    //     vm.stats.formFields.statId.templateOptions.options = options;
+
+    //     return options;
+    //   });
+    // }
+
+    function getStatOptions() {
+      return getStats().then(function() {
+        
+        vm.stats.typeOptions.push({name: 'All', value: 'all'});
+        
+        _.each(vm.stats.statList, function(stat) {
+          vm.stats.typeOptions.push({name: stat.name, value: stat.id});
+        });
+
+        setStatFields();
+
+        return vm.stats.typeOptions;
+      });
+    }
+
+    function setStatFields() {
+      vm.stats.fields.statId.templateOptions.options = vm.stats.typeOptions;
+
+      vm.stats.formFields = [
+        vm.stats.fields.statId,
+        vm.stats.fields.orderBy,
+        vm.stats.fields.orderDir
+      ];
+    }
 
     function getMyStats() {
 
-      var userId = 1; //user.id;
-      var statId = (vm.statId === 'all') ? null : vm.statId;
-
+      var userId = user.id;
+      var statId = (!vm.stats.formData.statId || vm.stats.formData.statId === 'all') ? null : vm.stats.formData.statId;
+      var orderBy = (vm.stats.formData.orderBy) ? vm.stats.formData.orderBy : 'statDate';
+      var orderDir = (vm.stats.formData.orderDir) ? 'ASC' : 'DESC';
+      
       var params = {
         userId: userId,
-        statId: statId
+        statId: statId,
+        orderBy: orderBy,
+        orderDir: orderDir
       };
 
       return scStats.getAllUsersStats(params).then(function (response) {
@@ -157,11 +239,6 @@
       vm.stats.skipNoRecords =  0;
       vm.stats.orderByField = 'StatDate';
       vm.stats.orderByType = 'DESC';
-
-      // vm.stats.jobStatusCode = ''; // To search/filter by jobStatusCode
-      // vm.stats.searchKeyword = ''; // To search/filter by JobTitleText
-      // vm.stats.jobId = ''; // To search/filter by VOC Job Id
-      // vm.stats.empJobId = ''; // To search/filter by Employer’s Job id
 
       vm.getMyStats();
       $scope.modal.hide();

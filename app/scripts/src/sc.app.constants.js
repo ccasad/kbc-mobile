@@ -12,7 +12,7 @@
       angelSubDomain: 'team',
       supportTeamSubDomain: 'team',
       baseUrl: '/',
-      restBaseUrl: 'https://www.casad.net/kbcapi/',
+      restBaseUrl: 'https://www.casad.net/kbcapi/', // '/kellysbc/api/', //
       vcnBaseUrl: 'https://www.vcn.org',
       imageUrl: '/images/',
       auth0Domain: 'xpandmcg.auth0.com',

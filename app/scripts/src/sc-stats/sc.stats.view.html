@@ -3,7 +3,7 @@
     <span>My Stats</span>
   </ion-nav-title>
 
-  <ion-nav-buttons side="secondary" data-ng-show="vm.jobs.isFilterVisible">
+  <ion-nav-buttons side="secondary" data-ng-show="vm.stats.isFilterVisible">
     <button class="button button-icon icon ion-ios-settings-strong sc-icon-small" data-ng-click="vm.showFilters();"></button>
   </ion-nav-buttons>
 
@@ -11,7 +11,7 @@
 
     <ion-list class="sc-jobs-list">
       
-      <ion-item data-ng-repeat="stat in filteredStats = (vm.stats.list) | orderBy: 'statDate':true" class="item" id="stat-{{::stat.statId}}">
+      <ion-item data-ng-repeat="stat in filteredStats = (vm.stats.list)" class="item" id="stat-{{::stat.statId}}">
 
         <div class="sc-job-content-wrapper">
           <div class="sc-job-content"> 
@@ -28,11 +28,11 @@
     </ion-list>
 
     <div class="card text-center small text-warning" data-ng-show="filteredStats.length < 1 && !vm.stats.loading">
-      <div class="item item-text-wrap" data-ng-bind="vm.jobs.noStatsText"></div>
+      <div class="item item-text-wrap" data-ng-bind="vm.stats.noStatsText"></div>
     </div>
 
     <ion-infinite-scroll
-      data-ng-if="vm.jobs.showMoreStatsLink"
+      data-ng-if="vm.stats.showMoreStatsLink"
       icon="ion-loading-c"
       on-infinite="vm.getMoreStatsList()"
       distance="1%">
