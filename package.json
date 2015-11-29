@@ -51,31 +51,11 @@
     "test": "grunt test"
   },
   "cordovaPlugins": [
-    "org.apache.cordova.device",
-    "org.apache.cordova.console",
-    "com.ionic.keyboard",
     "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
-    "org.apache.cordova.network-information",
-    "https://github.com/danwilson/google-analytics-plugin.git",
-    "cordova-plugin-inappbrowser",
-    "org.apache.cordova.console",
-    "org.apache.cordova.device",
-    "org.apache.cordova.network-information",
-    "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
-    "cordova-plugin-inappbrowser",
-    "com.ionic.keyboard",
-    "https://github.com/danwilson/google-analytics-plugin.git",
-    "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
-    "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
-    "org.apache.cordova.device",
-    "org.apache.cordova.console",
-    "org.apache.cordova.console",
-    "org.apache.cordova.network-information",
-    "org.apache.cordova.device",
-    "com.ionic.keyboard",
-    "com.ionic.keyboard",
-    "https://github.com/danwilson/google-analytics-plugin.git",
-    "https://github.com/danwilson/google-analytics-plugin.git"
+    "cordova-plugin-device",
+    "cordova-plugin-statusbar",
+    "ionic-plugin-keyboard",
+    "cordova-plugin-splashscreen"
   ],
   "cordovaPlatforms": [
     "ios"

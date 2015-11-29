@@ -5,7 +5,7 @@
     "lodash": "~3.2.0",
     "moment": "~2.9.0",
     "bootstrap": "~3.3.2",
-    "ionic": "v1.0.0",
+    "ionic": "v1.1.1",
     "ngCordova": "~0.1.12-alpha",
     "auth0-angular": "~4.0.1",
     "a0-angular-storage": "~0.0.9",

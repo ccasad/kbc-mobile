@@ -5,12 +5,12 @@
     .module('scAuth')
     .controller('ScAuthCtrl', ScAuthCtrl);
 
-  ScAuthCtrl.$inject = ['auth', '$state', '$scope', '$timeout', 'store', 'scAuth', 'scAlert', 'scUtility', '$ionicPlatform'];
+  ScAuthCtrl.$inject = ['$scope', '$timeout', 'scAuth', 'scAlert', 'scUtility', '$ionicPlatform'];
 
-  function ScAuthCtrl(auth, $state, $scope, $timeout, store, scAuth, scAlert, scUtility, $ionicPlatform) {
+  function ScAuthCtrl($scope, $timeout, scAuth, scAlert, scUtility, $ionicPlatform) {
     var vm = this;
 
-    vm.logo = false;
+    vm.logo = true;
 
     vm.login = login;
     vm.runLogoAnimation = runLogoAnimation;

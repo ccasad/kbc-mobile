@@ -36,7 +36,6 @@
 
     // Define the constructor function.
     function scUser(id, firstName, lastName, email, token, role, createdTime) {
-
       this.id = id;
       this.firstName = firstName;
       this.lastName = lastName;
@@ -99,7 +98,7 @@
 
     function updateRootUser() {
       var user = scUser.getRootUser();
-      if(user.isAuthenticated()) {
+      if (user.isAuthenticated()) {
         scUser.getUserById(user.id).then(function(result) {
           user = scUser.setUser(result);
           if (user && user instanceof scUser && user.id) {
@@ -126,6 +125,7 @@
 
     function isAuthorized(accessLevel, role) {
       var self = this;
+
       var val;
       if (role === undefined) {
         role = self.role;

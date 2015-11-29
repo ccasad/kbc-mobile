@@ -65,6 +65,14 @@
         templateOptions: {
           label: 'Ascending Order',
           toggleClass: 'balanced'
+        },
+        expressionProperties: {
+          'templateOptions.label': function($viewValue, $modelValue, scope) {
+            if (scope.model.orderDir) {
+              return 'Ascending Order';
+            }
+            return 'Descending Order';
+          }
         }
       }
     };

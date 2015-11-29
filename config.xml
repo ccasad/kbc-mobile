@@ -64,4 +64,5 @@
   <icon src="resources/ios/icon/icon-small@3x.png"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
+  <preference name="BackupWebStorage" value="none" />
 </widget>

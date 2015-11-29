@@ -14,10 +14,9 @@
   authRunBlock.$inject = ['$rootScope', 'scUser', '$state'];
 
   function authRunBlock($rootScope, scUser, $state) {
-
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
       var user = scUser.getRootUser();
-      //$http.defaults.headers.common.USERTOKEN = user.token;
+
       if (!user.isAuthorized(toState.data.access)) {
         event.preventDefault();
         if(!user.isAuthenticated()) {
@@ -26,19 +25,17 @@
           //$state.go(APP_GLOBALS.appDefaultUserRoute); 
           //$state.go(APP_GLOBALS.appDefaultUserRoute, {}, {notify:false});
           $state.go(toState.name, toParams, {notify: false}).then(function() {
-            $rootScope.$broadcast('$stateChangeSuccess', toState, toParams, fromState, fromParams);
+            $rootScope.$broadcast('$stateChangeSuccess', 'user.stats-list', toParams, fromState, fromParams);
           });
         }
       }
     });
-
   }
 
   routeConfiguration.$inject = ['$stateProvider', 'APP_GLOBALS'];
 
   function routeConfiguration($stateProvider, APP_GLOBALS) {
     var componentPath = APP_GLOBALS.appModulesPath + 'sc-auth/';
-
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
     // Set up the various states which the app can be in.
