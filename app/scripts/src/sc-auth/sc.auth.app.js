@@ -45,12 +45,17 @@
       .state('anon.login', {
         url: '/login',
         templateUrl: componentPath+'sc.login.view.html',
-        controller: 'ScAuthCtrl as vm',
-        // views: { // TODO
-        //   'user-login': {
-        //     templateUrl: componentPath+'sc.login.view.html',
-        //     controller: 'ScAuthCtrl as vm'
-        //   }
+        controller: 'ScLoginCtrl as vm',
+      })
+      .state('anon.register', {
+        url: '/register',
+        templateUrl: componentPath+'sc.register.view.html',
+        controller: 'ScRegisterCtrl as vm',
+      })
+      .state('anon.forgot-password', {
+        url: '/forgot-password',
+        templateUrl: componentPath+'sc.forgot-password.view.html',
+        controller: 'ScForgotPasswordCtrl as vm',
       });
 
   }

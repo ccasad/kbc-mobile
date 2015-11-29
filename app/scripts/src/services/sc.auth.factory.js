@@ -5,80 +5,98 @@
     .module('kbcMobileApp.core')
     .factory('scAuth', authFactory);
 
-  authFactory.$inject = ['$http', 'APP_GLOBALS', '$state', 'scUser', 'scStorage', 'scUtility', 'auth', '_', 'scAlert'];
+  authFactory.$inject = ['$http', '$q', 'APP_GLOBALS', '$state', 'scUser', 'scStorage', 'scUtility', '_', 'scAlert'];
 
-  function authFactory($http, APP_GLOBALS, $state, scUser, scStorage, scUtility, auth, _, scAlert) {
+  function authFactory($http, $q, APP_GLOBALS, $state, scUser, scStorage, scUtility, _, scAlert) {
 
     return {
       login: login,
-      logout: logout
+      logout: logout,
+      register: register,
+      resetPassword: resetPassword
     };
 
     function login(loginCredentials) {
       var url = scUtility.getRestBaseUrl() + 'login';
 
       return $http.post(url, loginCredentials)
-        .then(loginComplete)
-        .catch(loginFailed);
+        .then(success)
+        .catch(failed);
 
-      function loginComplete(response) {
-        afterLoginTasks(response);
+      function success(response) {
+        if (response.data.status && !response.data.status.success) {
+          var msg = 'Incorrect email or password.';
+          if(response.data.status.msg) {
+            msg = response.data.status.msg;
+          }
+          scAlert.showAlert(msg);
+          return;
+        }
+        var user = scUser.setUser(response.data.data);
+
+        if (user && user instanceof scUser && user.id) {
+          scStorage.set('user',user);
+
+          // need to clear the cache and history on login, as just clearing it on logout was giving unexpected results
+          scUtility.clearCache();
+
+          $state.go(APP_GLOBALS.appDefaultUserRoute);
+        }
       }
 
-      function loginFailed() {
-        // Catch and handle exceptions from success/error/finally functions
-        //console.log('call to rest failed with status:'+ error.status, error);
-        scAlert.error('There was an issue signing in. Please try again.');
+      function failed() {
+        scAlert.error('There was an issue signing in.');
       }
-
     }
 
     function logout() {
       var url = scUtility.getRestBaseUrl() + 'logout';
 
       return $http.post(url)
-        .then(logoutComplete)
-        .catch(logoutFailed);
+        .then(success)
+        .catch(failed);
 
-      function logoutComplete() {
-        auth.signout();
-        cleanup();
+      function success() {
+        scStorage.remove('user');
+        scUtility.clearCacheHistory();
+
         $state.go('anon.login');
       }
 
-      function logoutFailed() {
+      function failed() {
         scAlert.error('There was an issue signing out.');
       }
-
     }
 
-    function cleanup() {
-      scStorage.remove('user');
-      scUtility.clearCacheHistory();
-    }
+    function register(params) {
+      return $http.post(scUtility.getRestBaseUrl()+'register', params)
+        .then(success)
+        .catch(failed);
 
-    //utility function to be invoked after successful login to do all the common tasks like setting localStorage and redirection
-    function afterLoginTasks(response) {
-      if (response.data.status && !response.data.status.success) {
-        var msg = 'Incorrect email or password. Please try again';
-        if(response.data.status.msg) {
-          msg = response.data.status.msg;
-        }
-        scAlert.showAlert(msg);
-        return;
+      function success(response) {
+        return response.data;
       }
-      var user = scUser.setUser(response.data.data);
 
-      if (user && user instanceof scUser && user.id) {
-        scStorage.set('user',user);
-
-        // need to clear the cache and history on login, as just clearing it on logout was giving unexpected results
-        scUtility.clearCache();
-
-        $state.go(APP_GLOBALS.appDefaultUserRoute);
+      function failed(error) {
+        var msg = 'Issue registering. ' + error.data.description;
+        return $q.reject(msg);
       }
     }
 
+    function resetPassword(params) {
+      return $http.post(scUtility.getRestBaseUrl()+'reset-password', params)
+        .then(success)
+        .catch(failed);
+
+      function success(response) {
+        return response.data;
+      }
+
+      function failed(error) {
+        var msg = 'Issue resetting password. ' + error.data.description;
+        return $q.reject(msg);
+      }
+    }
   }
 
 })();

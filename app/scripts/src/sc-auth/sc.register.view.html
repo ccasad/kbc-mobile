@@ -1,0 +1,39 @@
+<ion-view title="" hide-nav-bar="true" class="sc-login-container">
+	<ion-content>
+
+		<div class="row row-center sc-row-center">
+      <div class="col" data-ng-class="{'sc-login-logo-small-container' : vm.isAnimationAvailable}">
+        <img src="images/kellysbc.gif" class="sc-login-logo-small" />
+      </div>
+		</div>
+
+		<div class="row row-center sc-row-center">
+  		<div class="col">
+  			<div class="sc-login-box">
+		  		<form accept-charset="UTF-8" role="form" id="registerForm" name="registerForm" data-ng-submit="vm.register(registerForm.$valid)" novalidate="novalidate">
+		  			<label class="item item-input">
+		  				<input type="text" placeholder="First Name" data-ng-model="vm.registerFields.firstName" data-ng-required="true" name="firstName" id="firstName">
+		  			</label>
+		  			<label class="item item-input">
+		  				<input type="text" placeholder="Last Name" data-ng-model="vm.registerFields.lastName" data-ng-required="true" name="lastName" id="lastName">
+		  			</label>
+		  			<label class="item item-input">
+		  				<input type="email" placeholder="Email" data-ng-model="vm.registerFields.email" data-ng-required="true" name="email" id="email">
+		  			</label>
+		  			<label class="item item-input">
+							<input type="password" placeholder="Password" data-ng-model="vm.registerFields.password" data-ng-required="true" name="password" id="password">
+						</label>
+		  			<button class="button button-dark button-block" type="submit" data-ng-click="submitted=true"><strong>REGISTER!</strong></button>
+		  		</form>
+	  		</div>
+  		</div>
+  	</div>
+
+  	<div class="row row-center sc-row-center">
+  		<div class="col">
+  			<a href="" data-ui-sref="anon.login" class="sc-login-text">Back to Login</a>
+  		</div>
+  	</div>
+
+	</ion-content>
+</ion-view>

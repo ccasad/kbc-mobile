@@ -232,6 +232,15 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
   width: auto;
   height: 140px;
 }
+.sc-login-logo-small-container {
+  height: 70px;
+  margin-bottom: 20px;
+  text-align:center;
+}
+.sc-login-logo-small {
+  width: auto;
+  height: 70px;
+}
 .sc-login-social-container {
   margin-bottom: 10px;
 }
