@@ -10,6 +10,10 @@
   function ScLoginCtrl($scope, $timeout, scAuth, scAlert, scUtility, $ionicPlatform) {
     var vm = this;
 
+    vm.loginCredentials = {
+      email: '',
+      password: ''
+    };
     vm.logo = true;
 
     vm.login = login;
