@@ -17,7 +17,7 @@
 
     $stateProvider
       .state('user.account', {
-        //cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
+        cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
         url: '/account',
         views: {
           'user-account': {

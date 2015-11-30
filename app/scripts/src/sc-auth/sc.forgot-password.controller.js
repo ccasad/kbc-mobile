@@ -5,9 +5,9 @@
     .module('scAuth')
     .controller('ScForgotPasswordCtrl', ScForgotPasswordCtrl);
 
-  ScForgotPasswordCtrl.$inject = ['scAuth', 'scAlert'];
+  ScForgotPasswordCtrl.$inject = ['$state', 'scAuth', 'scAlert'];
 
-  function ScForgotPasswordCtrl(scAuth, scAlert) {
+  function ScForgotPasswordCtrl($state, scAuth, scAlert) {
     var vm = this;
 
     vm.resetPassword = resetPassword;
@@ -25,7 +25,10 @@
         email: vm.resetPasswordFields.email
       };
 
-      scAuth.resetPassword(params);
+      return scAuth.resetPassword(params).then(function () {
+        scAlert.success('A temporary password has been emailed to you.');
+        $state.go('anon.login');
+      });
     }
   }
 })();
