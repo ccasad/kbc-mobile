@@ -25,6 +25,7 @@
         templateOptions: {
           type: 'password',
           label: 'Current password *',
+          placeholder: 'Enter your current password',
           addonLeft: 'text',
           required: true
         }
@@ -35,6 +36,7 @@
         templateOptions: {
           type: 'password',
           label: 'New password *',
+          placeholder: 'Enter a new password',
           addonLeft: 'text',
           required: true
         }
@@ -45,6 +47,7 @@
         templateOptions: {
           type: 'password',
           label: 'Confirm password *',
+          placeholder: 'Confirm the new password',
           addonLeft: 'text',
           required: true
         }
