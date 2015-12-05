@@ -16,15 +16,15 @@
     };
 
     function set(key, value) {
-    	$window.localStorage[key] = JSON.stringify(value);
+      $window.localStorage.setItem(key, JSON.stringify(value));
     }
 
     function get(key) {
-    	return JSON.parse($window.localStorage[key] || '{}');
+    	return JSON.parse($window.localStorage.getItem(key) || '{}');
     }
 
     function remove(key) {
-    	$window.localStorage[key] = null;
+      $window.localStorage.setItem(key, null);
     }
   }
 
