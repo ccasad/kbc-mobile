@@ -41,8 +41,18 @@
         url: '/stats-add',
         views: {
           'user-stats-add': {
-            templateUrl: componentPath+'sc.stats-add.view.html',
-            controller: 'ScStatsAddCtrl as vm'
+            templateUrl: componentPath+'sc.stats-edit.view.html',
+            controller: 'ScStatsEditCtrl as vm'
+          }
+        }
+      })
+      .state('user.stats-edit', {
+        cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
+        url: '/stats-edit/:userStatId',
+        views: {
+          'user-stats': {
+            templateUrl: componentPath+'sc.stats-edit.view.html',
+            controller: 'ScStatsEditCtrl as vm'
           }
         }
       });

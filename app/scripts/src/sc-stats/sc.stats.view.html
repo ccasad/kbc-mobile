@@ -11,12 +11,11 @@
 
     <ion-list class="sc-jobs-list">
       
-      <ion-item data-ng-repeat="stat in filteredStats = (vm.stats.list)" class="item" id="stat-{{::stat.statId}}">
+      <ion-item data-ng-repeat="stat in filteredStats = (vm.stats.list)" class="item" id="stat-{{::stat.statId}}" data-ui-sref="user.stats-edit({userStatId: stat.userStatId})">
 
         <div class="sc-job-content-wrapper">
           <div class="sc-job-content"> 
-
-            <strong class="sc-stats-name pull-left" data-ng-bind="stat.statName"></strong> 
+            <strong class="sc-stats-name pull-left" data-ng-bind="stat.statName"></strong>
             <strong class="pull-right" data-ng-bind="::stat.statValue" data-ng-class="{'assertive': stat.isPersonalRecord}"></strong>
             <br>
             <span class="pull-left sc-muted" data-ng-bind="::stat.statDate | scDateFormatNoTime"></span> 
