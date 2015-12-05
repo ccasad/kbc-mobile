@@ -16,6 +16,7 @@
       getUserStat: getUserStat,
       getAllUsersStats: getAllUsersStats,
       updateUserStat: updateUserStat,
+      deleteUserStat: deleteUserStat,
       getStatFormElementType: getStatFormElementType
     };
 
@@ -66,8 +67,8 @@
       }
     }
 
-    function getUserStat(userId, statId) {
-      return $http.get(scUtility.getRestBaseUrl()+'user-stat/'+userId+'/'+statId)
+    function getUserStat(userId, userStatId) {
+      return $http.get(scUtility.getRestBaseUrl()+'user-stat/'+userId+'/'+userStatId)
         .then(success)
         .catch(failed);
 
@@ -98,7 +99,7 @@
 
     function updateUserStat(params) {
       var action = 'add-user-stat';
-      if (params.action === 'update') {
+      if (params.userStatId && params.userStatId.length) {
         action = 'update-user-stat';
       }
 
@@ -110,8 +111,31 @@
         return response.data;
       }
 
-      function failed(error) {
-        var msg = 'query for all users stats failed. ' + error.data.description;
+      function failed() {
+        var msg = 'Issue saving user stat.';
+        return $q.reject(msg);
+      }
+    }
+
+    function deleteUserStat(userId, userStatId) {
+      //since delete is a reserved keyword for JS, $http.delete fails in IE8, so we need to write delete in the format below
+      if (userStatId) {
+        return $http({
+            method: 'DELETE',
+            url: scUtility.getRestBaseUrl() + 'delete-user-stat/' + userStatId + '/' + userId
+          })
+          .then(success)
+          .catch(failed);
+      } else {
+        failed();
+      }
+
+      function success(response) {
+        return response.data;
+      }
+
+      function failed() {
+        var msg = 'Issue deleting user stat.';
         return $q.reject(msg);
       }
     }
@@ -124,64 +148,3 @@
     }
   }
 })();
-
-
-// (function() {
-//   'use strict';
-
-//   angular
-//     .module('kbcMobileApp.core')
-//     .factory('scStats', scStatsFactory);
-
-//   scStatsFactory.$inject = ['$http', 'APP_GLOBALS', 'scUtility', 'scUser'];
-
-//   /* @ngInject */
-//   function scStatsFactory($http, APP_GLOBALS, scUtility, scUser) {
-//     var scJobs = {
-//       getJobsList: getJobsList,
-//     };
-
-//     return scJobs;
-
-//     ////////////////
-
-//     function getJobsList(jobsParams) {
-
-//       var params = {
-//         'userId': jobsParams.userId,
-//         'noOfDays': jobsParams.noOfDays,
-//         'employerId': (jobsParams.employerId) ? jobsParams.employerId : 0,
-
-//         'maxLimit': jobsParams.maxLimit,
-//         'skipNoRecords': (jobsParams.skipNoRecords) ? jobsParams.skipNoRecords : 0,
-
-//         'orderByField': (jobsParams.orderByField) ? jobsParams.orderByField : '',
-//         'orderByType': (jobsParams.orderByType) ? jobsParams.orderByType : '',
-
-//         'jobStatusCode': (jobsParams.jobStatusCode) ? jobsParams.jobStatusCode : '', // To search/filter by jobStatusCode
-//         'searchKeyword': (jobsParams.searchKeyword) ? jobsParams.searchKeyword : '', // To search/filter by JobTitleText
-//         'jobId': (jobsParams.jobId) ? jobsParams.jobId : '', // To search/filter by VOC Job Id
-//         'empJobId': (jobsParams.empJobId) ? jobsParams.empJobId : '', // To search/filter by Employer’s Job id
-//       };
-
-//       var promise = scUtility.getDefaultPromise();
-//       var user = scUser.getRootUser();
-
-//       if(user.id) {
-
-//         promise = $http.post(scUtility.getRestBaseUrl() + '/do/jobs-list', params).then(
-//           function(response) {
-//             return response.data;
-
-//           }, function() {
-//             return APP_GLOBALS.httpError;
-//           }
-//         );
-
-//       }
-//       return promise;
-//     }
-
-//   }
-
-// })();
