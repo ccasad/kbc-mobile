@@ -75,7 +75,23 @@
             return true;
           }
         }
-	    }
+	    },
+      statComment: {
+        key: 'statComment',
+        type: 'stacked-input',
+        templateOptions: {
+          type: 'text',
+          label: 'Comment'
+        },
+        expressionProperties: {
+          'templateOptions.disabled': function($viewValue, $modelValue, scope) {
+            if (scope.model.statValue) {
+              return false;
+            }
+            return true;
+          }
+        }
+      }
   	};
 
 	  vm.getStats = getStats;
@@ -101,6 +117,8 @@
     	vm.stats.fields.statInfo.templateOptions.label = 'Additional info for ' + stat.name;
     	vm.stats.fields.statInfo.templateOptions.placeholder = '(i.e. lbs, inches, )';
 
+      vm.stats.fields.statComment.templateOptions.placeholder = 'Have anything else to mention?';
+
     	setStatFields();
     }
 
@@ -124,7 +142,8 @@
 		  	vm.stats.fields.statDate,
 			  vm.stats.fields.statType,
 		    vm.stats.fields.statValue,
-		    vm.stats.fields.statInfo
+		    vm.stats.fields.statInfo,
+        vm.stats.fields.statComment
 		  ];
     }
 
@@ -153,15 +172,21 @@
     			statDate: vm.stats.formData.statDate,
     			statId: vm.stats.formData.statType,
     			statValue: vm.stats.formData.statValue,
-    			statInfo: vm.stats.formData.statInfo
+    			statInfo: vm.stats.formData.statInfo,
+          statComment: vm.stats.formData.statComment
     		};
 
-    		return scStats.updateUserStat(params).then(function() {
+    		return scStats.updateUserStat(params).then(function(response) {
+          if (response.data && response.data.msg) {
+            scAlert.success(response.data.msg);
+            return;
+          }
 	        scAlert.success('The stat has been saved');
           vm.stats.formData.statDate = null;
           vm.stats.formData.statType = null;
           vm.stats.formData.statValue = null;
           vm.stats.formData.statInfo = null;
+          vm.stats.formData.statComment = null;
 	        $state.go('user.stats-list');
 	      });
     	}
