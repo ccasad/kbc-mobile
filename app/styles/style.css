@@ -110,6 +110,9 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
 .sc-btn-margin-left {
   margin-left: 5px;
 }
+.sc-btn-margin {
+  margin: 15px 10px 0 10px;
+}
 .sc-user-avatar-small {
   border: 1px solid #DFDFDF;
   height: 49px;
@@ -470,8 +473,40 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
   margin-right: 15px;
   text-transform: uppercase;
 }
+.sc-stats-info {
+  width: 100%;
+  margin-top: 5px;
+}
+.sc-stats-date1 {
+  position: relative;
+  top: 15px;
+}
+.sc-stats-date2 {
+  position: relative;
+  top: 5px;
+}
+.sc-stats-pr {
+  color: #E6B500;
+  font-size: 24px;
+  margin: 0 10px;
+}
+.sc-invisible {
+  visibility: hidden;
+}
+.sc-stat-value-big {
+  font-size: 26px;
+}
+.sc-no-data-card {
+  padding: 15px;
+}
+.sc-no-data-text {
+  font-size: 18px;
+}
 /* End of Stats */
 
+.sc-margin-right {
+  margin-right: 10px;
+}
 .sc-center-text {
   text-align: center;
 }

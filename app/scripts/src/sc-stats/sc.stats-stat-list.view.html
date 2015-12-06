@@ -1,0 +1,37 @@
+<ion-view>
+  <ion-nav-title>
+    <span data-ng-bind="vm.stats.title"></span>
+  </ion-nav-title>
+
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-stats-bars sc-icon-small" data-ng-click="vm.stats.isChart=true" data-ng-if="!vm.stats.isChart"></button>
+    <button class="button button-icon icon ion-ios-list-outline sc-icon-small" data-ng-click="vm.stats.isChart=false" data-ng-if="vm.stats.isChart"></button>
+  </ion-nav-buttons>
+
+  <ion-content>
+
+    <ion-list class="sc-jobs-list" data-ng-if="!vm.stats.isChart">
+      <a data-ng-repeat="stat in filteredStats = (vm.stats.list)" class="item" id="stat-{{::stat.statId}}" data-ui-sref="user.stats-edit({userStatId: stat.userStatId})">
+        <div class="sc-job-content"> 
+          <span class="pull-left sc-muted" data-ng-class="{'sc-stats-date1': stat.statInfo, 'sc-stats-date2': !stat.statInfo}" data-ng-bind="::stat.statDate | scDateFormatNoTime"></span> 
+          <strong class="sc-stat-value-big pull-right" data-ng-bind="::stat.statValue"></strong>
+          <i class="ion-ribbon-b sc-stats-pr pull-right" data-ng-class="{'sc-invisible': !stat.isPersonalRecord}"></i>
+          <br data-ng-if="stat.statInfo">
+          <div class="sc-muted pull-right sc-text-right sc-stats-info" data-ng-bind="::stat.statInfo"></div>
+        </div>
+      </a>
+    </ion-list>
+
+    <div class="card text-center" data-ng-if="vm.stats.isChart">
+      <!-- <am-chart id="myFirstChart" options="vm.stats.chartOptions" style="height:500; width:100%"></am-chart> -->      
+      Chart would go here
+    </div>
+
+    <div class="card text-center sc-no-data-card" data-ng-if="filteredStats.length < 1">
+      <strong class="sc-muted sc-no-data-text">Hey you don't have any stats!</strong><br><br>
+      <span class="sc-muted">No problem, just click on the <br/>Add Stat icon below and add a new stat.</span>
+    </div>
+
+  </ion-content>
+
+</ion-view>

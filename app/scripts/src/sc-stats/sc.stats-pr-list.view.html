@@ -1,0 +1,32 @@
+<ion-view>
+  <ion-nav-title>
+    <span>My Personal Records</span>
+  </ion-nav-title>
+
+  <ion-nav-buttons side="secondary" data-ng-show="vm.stats.isFilterVisible">
+    <button class="button button-icon icon ion-ios-settings-strong sc-icon-small" data-ng-click="vm.showFilters();"></button>
+  </ion-nav-buttons>
+
+  <ion-content>
+    <ion-list class="sc-jobs-list">
+      <a item="item" data-ng-repeat="stat in filteredStats = (vm.stats.list)" class="item" id="stat-{{::stat.statId}}" data-ui-sref="user.stats-stat-list({statId: stat.statId})">
+        <div class="sc-job-content-wrapper">
+          <div class="sc-job-content"> 
+            <strong class="sc-stats-name pull-left" data-ng-bind="::stat.statName"></strong>
+            <strong class="pull-right" data-ng-bind="::stat.statValue"></strong>
+            <br>
+            <span class="pull-left sc-muted" data-ng-bind="::stat.statDate | scDateFormatNoTime"></span> 
+            <span class="pull-right sc-muted sc-truncate sc-text-right" data-ng-bind="::stat.statInfo"></span>
+          </div>
+        </div>
+      </a>
+    </ion-list>
+
+    <div class="card text-center sc-no-data-card" data-ng-if="filteredStats.length < 1">
+      <strong class="sc-muted sc-no-data-text">Hey you don't have any stats!</strong><br><br>
+      <span class="sc-muted">No problem, just click on the <br/>Add Stat icon below and add a new stat.</span>
+    </div>
+
+  </ion-content>
+
+</ion-view>

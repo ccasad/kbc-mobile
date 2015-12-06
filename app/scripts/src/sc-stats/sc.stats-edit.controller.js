@@ -5,10 +5,10 @@
     .module('scStats')
     .controller('ScStatsEditCtrl', ScStatsEditCtrl);
 
-  ScStatsEditCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state', '$window'];
+  ScStatsEditCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state', '$previousState', '$ionicActionSheet'];
 
   /* @ngInject */
-  function ScStatsEditCtrl(scStats, scUser, scAlert, _, $state, $window) {
+  function ScStatsEditCtrl(scStats, scUser, scAlert, _, $state, $previousState, $ionicActionSheet) {
     var vm = this;
 
     vm.user = scUser.getRootUser();
@@ -200,29 +200,44 @@
             vm.stats.formData.statValue = null;
             vm.stats.formData.statInfo = null;
             vm.stats.formData.statComment = null;
-            $state.go('user.stats-list');
+            
+            $state.go('user.stats-pr-list');
           }
 	      });
     	}
     }
 
     function deleteUserStat() {
-      if ($state.params.userStatId && $state.params.userStatId.length) {
-        return scStats.deleteUserStat(vm.user.id, $state.params.userStatId).then(function(response) {
-          if (response.data && response.data.msg) {
-            scAlert.success(response.data.msg);
-            return;
-          }
-          scAlert.success('The stat has been deleted');
 
-          vm.stats.formData.statDate = null;
-          vm.stats.formData.statType = null;
-          vm.stats.formData.statValue = null;
-          vm.stats.formData.statInfo = null;
-          vm.stats.formData.statComment = null;
-          $state.go('user.stats-list');
-        });
-      }
+      $ionicActionSheet.show({
+        buttons: [
+          { text: 'Yes' },
+          { text: 'No' }
+        ],
+        titleText: 'Delete this stat?',
+        buttonClicked: function(index) {
+          if (index === 0 && $state.params.userStatId && $state.params.userStatId.length) {
+            scStats.deleteUserStat(vm.user.id, $state.params.userStatId).then(function(response) {
+              if (response.data && response.data.msg) {
+                scAlert.success(response.data.msg);
+                return;
+              }
+              scAlert.success('The stat has been deleted');
+
+              vm.stats.formData.statDate = null;
+              vm.stats.formData.statType = null;
+              vm.stats.formData.statValue = null;
+              vm.stats.formData.statInfo = null;
+              vm.stats.formData.statComment = null;
+              
+              $previousState.go();
+            });
+          }
+          return true;
+        }
+      });
+
+      
     }
 
     function getUserStat(userStatId) {
@@ -242,7 +257,12 @@
     }
 
     function cancelForm() {
-      $state.go('user.stats-list');
+      if (vm.stats.isNew) {
+        $state.go('user.stats-pr-list');
+      } else {
+        $state.go('user.stats-pr-list');
+        //$previousState.go();
+      } 
     }
   }
 

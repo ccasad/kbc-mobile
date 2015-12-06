@@ -25,7 +25,7 @@
           //$state.go(APP_GLOBALS.appDefaultUserRoute); 
           //$state.go(APP_GLOBALS.appDefaultUserRoute, {}, {notify:false});
           $state.go(toState.name, toParams, {notify: false}).then(function() {
-            $rootScope.$broadcast('$stateChangeSuccess', 'user.stats-list', toParams, fromState, fromParams);
+            $rootScope.$broadcast('$stateChangeSuccess', 'user.stats-pr-list', toParams, fromState, fromParams);
           });
         }
       }

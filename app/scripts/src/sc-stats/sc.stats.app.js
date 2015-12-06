@@ -26,12 +26,22 @@
     var componentPath = APP_GLOBALS.appModulesPath + APP_GLOBALS.appStatsModuleDir;
 
     $stateProvider
-      .state('user.stats-list', {
+      .state('user.stats-pr-list', {
         cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
-        url: '/stats',
+        url: '/stats-pr-list',
         views: {
           'user-stats': {
-            templateUrl: componentPath+'sc.stats.view.html',
+            templateUrl: componentPath+'sc.stats-pr-list.view.html',
+            controller: 'ScStatsCtrl as vm'
+          }
+        }
+      })
+      .state('user.stats-stat-list', {
+        cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
+        url: '/stats-stat-list/:statId',
+        views: {
+          'user-stats': {
+            templateUrl: componentPath+'sc.stats-stat-list.view.html',
             controller: 'ScStatsCtrl as vm'
           }
         }

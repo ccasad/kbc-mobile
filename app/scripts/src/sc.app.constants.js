@@ -61,7 +61,7 @@
       ],
       appModulesPath: 'scripts/src/',
       appDefaultRoute: 'anon.login',
-      appDefaultUserRoute: 'user.stats-list',
+      appDefaultUserRoute: 'user.stats-pr-list',
       googleAnalyticsAndroidKey: '', //'UA-63017146-7', // For Android
       googleAnalyticsIOSKey: '', //'UA-63017146-8', // For Ios
       googleAnalyticsKey: '', // For all other OS

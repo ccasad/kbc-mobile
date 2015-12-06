@@ -33,7 +33,8 @@
       'angular-capitalize-filter',
       'monospaced.elastic',
       'formlyIonic',
-
+      'ct.ui.router.extras',
+      
       /* App ENV constants - generated via grunt as per ENV */
       'kbcMobileApp.constants',
 

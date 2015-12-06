@@ -3,14 +3,17 @@
     <span data-ng-bind="vm.stats.title"></span>
   </ion-nav-title>
 
+  <ion-nav-buttons side="secondary" data-ng-show="!vm.stats.isNew">
+    <button class="button button-icon icon ion-ios-trash-outline sc-icon-small" data-ng-click="vm.deleteUserStat();"></button>
+  </ion-nav-buttons>
+
   <ion-content>
 		<div class="list">
 			<form>
 				<formly-form form="vm.statForm" model="vm.stats.formData" fields="vm.stats.formFields">
 					<div class="sc-center-text sc-btn-margin-top">
-	          <button class="button button-balanced sc-form-button" data-ng-click="vm.cancelForm();">Cancel</button>
-	          <button class="button button-balanced sc-form-button" data-ng-click="vm.deleteUserStat();" data-ng-if="!vm.stats.isNew">Delete</button>
-	          <button type="submit" class="button button-balanced sc-form-button" data-ng-click="vm.saveStat()" data-ng-disabled="vm.statForm.$invalid">Save</button>
+						<button class="button button-balanced sc-form-button" data-ng-click="vm.cancelForm();">Cancel</button>
+						<button type="submit" class="button button-balanced sc-form-button sc-btn-margin-left" data-ng-click="vm.saveStat()" data-ng-disabled="vm.statForm.$invalid">Save</button>
         	</div>
 				</formly-form>
 			</form>
