@@ -11,10 +11,10 @@
     .run(authRunBlock)
     .config(routeConfiguration);
 
-  authRunBlock.$inject = ['$rootScope', 'scUser', '$state'];
+  authRunBlock.$inject = ['$rootScope', 'scUser', '$state', 'APP_GLOBALS'];
 
-  function authRunBlock($rootScope, scUser, $state) {
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+  function authRunBlock($rootScope, scUser, $state, APP_GLOBALS) {
+    $rootScope.$on('$stateChangeStart', function(event, toState) {
       var user = scUser.getRootUser();
 
       if (!user.isAuthorized(toState.data.access)) {
@@ -22,11 +22,11 @@
         if(!user.isAuthenticated()) {
           $state.go('anon.login');
         } else {
-          //$state.go(APP_GLOBALS.appDefaultUserRoute); 
+          $state.go(APP_GLOBALS.appDefaultUserRoute); 
           //$state.go(APP_GLOBALS.appDefaultUserRoute, {}, {notify:false});
-          $state.go(toState.name, toParams, {notify: false}).then(function() {
-            $rootScope.$broadcast('$stateChangeSuccess', 'user.stats-pr-list', toParams, fromState, fromParams);
-          });
+          // $state.go(toState.name, toParams, {notify: false}).then(function() {
+          //   $rootScope.$broadcast('$stateChangeSuccess', 'user.stats-pr-list', toParams, fromState, fromParams);
+          // });
         }
       }
     });

@@ -5,10 +5,10 @@
     .module('scStats')
     .controller('ScStatsCtrl', ScStatsCtrl);
 
-  ScStatsCtrl.$inject = ['scUser', 'scStats', 'scAlert', '$ionicLoading', '$scope', '$state', '$previousState', '$ionicModal', 'APP_GLOBALS', '_'];
+  ScStatsCtrl.$inject = ['scUser', 'scStats', 'scAlert', '$ionicLoading', '$scope', '$state', '$ionicModal', 'APP_GLOBALS', '_', 'scMoment'];
 
   /* @ngInject */
-  function ScStatsCtrl(scUser, scStats, scAlert, $ionicLoading, $scope, $state, $previousState, $ionicModal, APP_GLOBALS, _) {
+  function ScStatsCtrl(scUser, scStats, scAlert, $ionicLoading, $scope, $state, $ionicModal, APP_GLOBALS, _, scMoment) {
     var vm = this;
 
     var user = scUser.getRootUser();
@@ -33,114 +33,19 @@
       loading: true,
       title: '',
       isChart: false,
-      chartOptions: {
-        'type': 'serial',
-        'theme': 'light',
-        'marginRight': 80,
-        'autoMarginOffset': 20,
-        'dataDateFormat': 'YYYY-MM-DD',
-        'valueAxes': [{
-          'id': 'v1',
-          'axisAlpha': 0,
-          'position': 'left'
-        }],
-        'balloon': {
-          'borderThickness': 1,
-          'shadowAlpha': 0
-        },
-        'graphs': [{
-          'id': 'g1',
-          'bullet': 'round',
-          'bulletBorderAlpha': 1,
-          'bulletColor': '#FFFFFF',
-          'bulletSize': 5,
-          'hideBulletsCount': 50,
-          'lineThickness': 2,
-          'title': 'red line',
-          'useLineColorForBulletBorder': true,
-          'valueField': 'value',
-          'balloonText': '<div style="margin:5px; font-size:19px;"><span style="font-size:13px;">[[category]]</span><br>[[value]]</div>'
-        }],
-        'chartScrollbar': {
-          'graph': 'g1',
-          'oppositeAxis':false,
-          'offset':30,
-          'scrollbarHeight': 80,
-          'backgroundAlpha': 0,
-          'selectedBackgroundAlpha': 0.1,
-          'selectedBackgroundColor': '#888888',
-          'graphFillAlpha': 0,
-          'graphLineAlpha': 0.5,
-          'selectedGraphFillAlpha': 0,
-          'selectedGraphLineAlpha': 1,
-          'autoGridCount':true,
-          'color':'#AAAAAA'
-        },
-        'chartCursor': {
-          'pan': true,
-          'valueLineEnabled': true,
-          'valueLineBalloonEnabled': true,
-          'cursorAlpha':0,
-          'valueLineAlpha':0.2
-        },
-        'categoryField': 'date',
-        'categoryAxis': {
-          'parseDates': true,
-          'dashLength': 1,
-          'minorGridEnabled': true
-        },
-        'export': {
-          'enabled': true
-        },
-        'dataProvider': [{
-            'date': '2012-07-27',
-            'value': 13
-        }, {
-            'date': '2012-07-28',
-            'value': 11
-        }, {
-            'date': '2012-07-29',
-            'value': 15
-        }, {
-            'date': '2012-07-30',
-            'value': 16
-        }, {
-            'date': '2012-07-31',
-            'value': 18
-        }, {
-            'date': '2012-08-01',
-            'value': 13
-        }, {
-            'date': '2012-08-02',
-            'value': 22
-        }, {
-            'date': '2012-08-03',
-            'value': 23
-        }, {
-            'date': '2012-08-04',
-            'value': 20
-        }, {
-            'date': '2012-08-05',
-            'value': 17
-        }, {
-            'date': '2012-08-06',
-            'value': 16
-        }]
-      }
+    };
+
+    vm.chart = {
+      labels: [],
+      series: ['one'],
+      data: [[]],
+      startDate: null,
+      stopDate: null,
     };
 
     vm.stats.formData = {};
 
     vm.stats.fields = {
-      // statId: {
-      //   key: 'statId',
-      //   type: 'select',
-      //   defaultValue: 'all',
-      //   templateOptions: {
-      //     label: 'Stat',
-      //     options: []
-      //   }
-      // },
       orderBy: {
         key: 'orderBy',
         type: 'select',
@@ -180,6 +85,8 @@
     vm.applyFilters = applyFilters;
     vm.hideFilters = hideFilters;
     vm.clearFilters = clearFilters;
+    vm.showLoading = showLoading;
+    vm.hideLoading = hideLoading;
 
     ////////////
 
@@ -246,10 +153,38 @@
         prOnly: prOnly
       };
 
+      vm.showLoading();
+
       return scStats.getAllUsersStats(params).then(function (response) {
         vm.stats.list = response.data;
+        vm.hideLoading();
+        setChartStats();
         return vm.stats.list;
       });
+    }
+
+    function setChartStats() {
+      vm.chart.labels = [];
+      vm.chart.data[0] = [];
+      _.each(vm.stats.list, function(stat, index) {
+        var d = getFormattedDateString(stat.statDate, index);
+        vm.chart.labels.push(d);
+        var v = stat.statValue.replace(':', '.');
+        vm.chart.data[0].push(v);
+      });
+    }
+
+    function getFormattedDateString(inDate, index) {
+      var d = scMoment(inDate);
+
+      var outDate;
+      if (index > 0 && d.month() > 0) {
+        outDate = d.format('D MMM');
+      } else {
+        outDate = d.format('D MMM YY');
+      }
+
+      return outDate;
     }
 
     function setStatsList() {
@@ -301,6 +236,16 @@
       vm.getMyStats();
       $scope.modal.hide();
     } // end of clearFilters
+
+    function showLoading() {
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
+    }
+
+    function hideLoading(){
+      $ionicLoading.hide();
+    }
   }
 
 })();

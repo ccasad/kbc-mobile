@@ -2,14 +2,12 @@
 	<ion-content class="padding sc-content">
 		<div class="list card" style="text-align:center;">
       <br>
-      <div data-sc-avatar-letter="sc-avatar-letter" data-avatar-class="sc-inline-block sc-account-avatar" data-avatar-size="lg" data-background-class="warning" data-ng-bind="vm.user.firstName.charAt(0)"></div>
+      <!-- <div data-sc-avatar-letter="sc-avatar-letter" data-avatar-class="sc-inline-block sc-account-avatar" data-avatar-size="lg" data-background-class="warning" data-ng-bind="vm.user.firstName.charAt(0)"></div> -->
 
       <h2 data-ng-bind="vm.user.firstName+' '+vm.user.lastName"></h2>
       <h4 data-ng-bind="vm.user.email"></h4>
-
       <br>
-
-      <p data-ng-show="!vm.account.showForm"><a href="javascript:void(0);" data-ng-click="vm.account.showForm=true">Change password</a></p>
+      <h4 data-ng-show="!vm.account.showForm"><a href="javascript:void(0);" data-ng-click="vm.account.showForm=true">Change password</a></h4>
 
       <div style="text-align:left;">
         <form data-ng-if="vm.account.showForm">
@@ -22,6 +20,12 @@
         </form>
       </div>
 
+      <p><hr></p>
+
+      <div class="padding">
+        If you have any issues with this app or would like to suggest enhancements,  send an email to Chris Casad, <a href="mailto:ccasad@gmail.com">ccasad@gmail.com</a>. Please don't bother Kelly with anything about this app. Thanks.
+      </div>
+
       <br>
     </div>
 
@@ -30,5 +34,6 @@
     		<span class="sc-font-bold">Sign Out</span>
     	</button>
     </div>
+
 	</ion-content>
 </ion-view>

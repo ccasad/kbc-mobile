@@ -14,10 +14,20 @@
 
     //////////
 
-    function register(isValid) {
+    function register(form) {
 
-      if(!isValid) {
-        scAlert.error('There was an issue with your registration.');
+      if(form.$invalid) {
+        if (form.firstName.$invalid) {
+          scAlert.error('There was an issue with your First Name.');
+        } else if (form.lastName.$invalid) {
+          scAlert.error('There was an issue with your Last Name.');
+        } else if (form.email.$invalid) {
+          scAlert.error('There was an issue with your Email.');
+        } else if (form.password.$invalid) {
+          scAlert.error('Your Password is required.');
+        } else {
+          scAlert.error('There was an issue with your registration.');
+        }
         return false;
       }
 

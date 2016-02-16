@@ -28,12 +28,11 @@
 
       /* 3rd-party Modules */
       'ionic',
-      'auth0',
       'ngCordova',
       'angular-capitalize-filter',
       'monospaced.elastic',
       'formlyIonic',
-      'ct.ui.router.extras',
+      'chart.js',
       
       /* App ENV constants - generated via grunt as per ENV */
       'kbcMobileApp.constants',

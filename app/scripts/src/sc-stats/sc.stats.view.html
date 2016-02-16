@@ -26,7 +26,7 @@
       </ion-item>
     </ion-list>
 
-    <div class="card text-center small text-warning" data-ng-show="filteredStats.length < 1 && !vm.stats.loading">
+    <div class="card text-center small text-warning ng-cloak" data-ng-show="!vm.stats.list || vm.stats.list.length < 1">
       <div class="item item-text-wrap" data-ng-bind="vm.stats.noStatsText"></div>
     </div>
 

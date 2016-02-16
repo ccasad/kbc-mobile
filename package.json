@@ -55,7 +55,14 @@
     "cordova-plugin-device",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-device",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-splashscreen",
+    "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+    "ionic-plugin-keyboard",
+    "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+    "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git"
   ],
   "cordovaPlatforms": [
     "ios"

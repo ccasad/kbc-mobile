@@ -107,6 +107,9 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
 .sc-btn-margin-top {
   margin-top: 15px;
 }
+.sc-btn-margin-bottom {
+  margin-bottom: 15px;
+}
 .sc-btn-margin-left {
   margin-left: 5px;
 }
@@ -519,3 +522,52 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
 .sc-form-button {
   width: 80px;
 }
+.sc-input-label {
+  width: 20%;
+}
+.sc-list-inset {
+  margin: 10px 10px 2px 10px;
+}
+.sc-help-text {
+  font-size: 75%;
+  color: #9C9C9C;
+}
+.sc-button-container {
+  margin-top: 30px;
+}
+.sc-item {
+  padding: 10px 16px;
+}
+.sc-item-input-wrapper {
+  width: 70%; 
+  height: 27px; 
+  text-align: right;
+}
+.sc-item-input {
+  position: relative; 
+  top: -10px; 
+  width: 140px; 
+  float: right; 
+  clear: both; 
+  text-align: right;
+}
+.sc-item-header-wrapper {
+  width: 30%; 
+  height: 27px;
+}
+.sc-item-header-wrapper-comments {
+  width: 100%;
+}
+#statForm .sc-item-input {
+  font-size: 16px;
+}
+input[type="date"] {
+  display: flex;
+  line-height: 16px;
+  width: 140px;
+  height: 25px;
+  top: -3px;
+}
+
+
+

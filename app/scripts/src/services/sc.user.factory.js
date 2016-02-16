@@ -102,7 +102,8 @@
         scUser.getUserById(user.id).then(function(result) {
           user = scUser.setUser(result);
           if (user && user instanceof scUser && user.id) {
-            scStorage.set('user',user);
+            //user.role = scUser.userRoles.user;
+            scStorage.set('user', user);
             // $rootScope.user = user;
           }
         });

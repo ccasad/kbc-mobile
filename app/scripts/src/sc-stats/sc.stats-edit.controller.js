@@ -5,10 +5,10 @@
     .module('scStats')
     .controller('ScStatsEditCtrl', ScStatsEditCtrl);
 
-  ScStatsEditCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state', '$previousState', '$ionicActionSheet'];
+  ScStatsEditCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state', '$ionicActionSheet', '$rootScope', 'scMoment'];
 
   /* @ngInject */
-  function ScStatsEditCtrl(scStats, scUser, scAlert, _, $state, $previousState, $ionicActionSheet) {
+  function ScStatsEditCtrl(scStats, scUser, scAlert, _, $state, $ionicActionSheet, $rootScope, scMoment) {
     var vm = this;
 
     vm.user = scUser.getRootUser();
@@ -16,86 +16,21 @@
     vm.stats = {
     	list: [],
     	typeOptions: [],
-    	formData: {},
-    	formFields: [],
+    	formData: {
+        statId: null,
+        statDate: new Date(),
+        statType: null,
+        statValue: null,
+        statInfo: null,
+        statComment: null
+      },
+      statValueType: 'text',
+      statValueDesc: '',
       isNew: true,
       title: 'New Stat'
     };
 
-    vm.stats.fields = {
-  		statDate: {
-	      key: 'statDate',
-	      type: 'stacked-input',
-	      templateOptions: {
-	      	type: 'date',
-	      	label: 'Date *',
-	      	addonLeft: 'text',
-	      	required: true
-	      }
-	    },
-  		statType: {
-        key: 'statType',
-        type: 'select',
-        templateOptions: {
-          label: 'Type *',
-          required: true,
-          options: [],
-          onChange: function($viewValue) {
-            selectStat($viewValue);
-          }
-        }
-      },
-      statValue: {
-	      key: 'statValue',
-	      type: 'stacked-input',
-	      templateOptions: {
-	      	type: 'text',
-	      	label: 'Value *',
-	      	required: true
-	      },
-	      expressionProperties: {
-          'templateOptions.disabled': function($viewValue, $modelValue, scope) {
-            if (scope.model.statType) {
-              return false;
-            }
-            return true;
-          }
-        }
-	    },
-	    statInfo: {
-	      key: 'statInfo',
-	      type: 'stacked-input',
-	      templateOptions: {
-	      	type: 'text',
-	      	label: 'Additional info'
-	      },
-	      expressionProperties: {
-          'templateOptions.disabled': function($viewValue, $modelValue, scope) {
-            if (scope.model.statValue) {
-              return false;
-            }
-            return true;
-          }
-        }
-	    },
-      statComment: {
-        key: 'statComment',
-        type: 'stacked-input',
-        templateOptions: {
-          type: 'text',
-          label: 'Comment'
-        },
-        expressionProperties: {
-          'templateOptions.disabled': function($viewValue, $modelValue, scope) {
-            if (scope.model.statValue) {
-              return false;
-            }
-            return true;
-          }
-        }
-      }
-  	};
-
+    vm.selectStat = selectStat;
 	  vm.getStats = getStats;
 	  vm.getStat = getStat;
 	  vm.saveStat = saveStat;
@@ -111,26 +46,18 @@
       vm.stats.isNew = false;
       vm.stats.title = 'Edit Stat';
       vm.getUserStat = getUserStat($state.params.userStatId);
+      vm.isInitial = true;
     }
 
-    function selectStat(statId) {
-    	var stat = _.find(vm.stats.list, {id: statId});
+    function selectStat() {
+    	var stat = _.find(vm.stats.list, {id: vm.stats.formData.statType});
 
-    	vm.stats.fields.statValue.templateOptions.type = scStats.getStatFormElementType(stat.formElementId);
-    	vm.stats.fields.statValue.templateOptions.label = 'Value for ' + stat.name + ' *';
-    	vm.stats.fields.statValue.templateOptions.placeholder = stat.description;
-
-    	if (stat.formElementId === 6) {
-    		vm.stats.fields.statValue.validators = vm.stats.timeValidator;
-    	}
-
-    	vm.stats.fields.statInfo.templateOptions.label = 'Additional info for ' + stat.name;
-    	vm.stats.fields.statInfo.templateOptions.placeholder = '(i.e. lbs, inches, )';
-
-      vm.stats.fields.statComment.templateOptions.placeholder = 'Have anything else to mention?';
-
-    	setStatFields();
-    }
+      if (!vm.isInitial) {
+        vm.stats.statValueType = scStats.getStatFormElementType(stat.formElementId);
+        vm.stats.statValueDesc = '- '+stat.description;
+      }
+      vm.isInitial = false;
+    } 
 
     function getStatOptions() {
     	return getStats().then(function() {
@@ -139,22 +66,11 @@
 					vm.stats.typeOptions.push({name: stat.name, value: stat.id});
 				});
 
-				setStatFields();
+        vm.stats.formData.statType = vm.stats.list[0].id; 
+        selectStat();
 
 				return vm.stats.typeOptions;
     	});
-    }
-
-    function setStatFields() {
-    	vm.stats.fields.statType.templateOptions.options = vm.stats.typeOptions;
-
-    	vm.stats.formFields = [
-		  	vm.stats.fields.statDate,
-			  vm.stats.fields.statType,
-		    vm.stats.fields.statValue,
-		    vm.stats.fields.statInfo,
-        vm.stats.fields.statComment
-		  ];
     }
 
     function getStats() {
@@ -230,7 +146,10 @@
               vm.stats.formData.statInfo = null;
               vm.stats.formData.statComment = null;
               
-              $previousState.go();
+              var prevState = $rootScope.$previousState;
+              if (prevState && prevState.from) {
+                $state.go(prevState.from, prevState.fromParams);
+              }
             });
           }
           return true;
@@ -247,7 +166,11 @@
             scAlert.success('Issue retrieving user stats.');
             return;
           }
-          vm.stats.formData.statDate = (response.data.date) ? new Date(response.data.date+' 00:00:00') : '';
+          vm.stats.statValueType = scStats.getStatFormElementType(response.data.formElementId);
+          vm.stats.statValueDesc = '- '+response.data.description;
+
+          vm.stats.formData.statDate = (response.data.date) ? scMoment(response.data.date).toDate() : '';
+          
           vm.stats.formData.statType = response.data.id;
           vm.stats.formData.statValue = response.data.value;
           vm.stats.formData.statInfo = response.data.info;
@@ -260,8 +183,10 @@
       if (vm.stats.isNew) {
         $state.go('user.stats-pr-list');
       } else {
-        $state.go('user.stats-pr-list');
-        //$previousState.go();
+        var prevState = $rootScope.$previousState;
+        if (prevState && prevState.from) {
+          $state.go(prevState.from, prevState.fromParams);
+        }
       } 
     }
   }

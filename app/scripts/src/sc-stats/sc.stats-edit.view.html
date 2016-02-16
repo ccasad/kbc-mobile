@@ -8,16 +8,75 @@
   </ion-nav-buttons>
 
   <ion-content>
-		<div class="list">
-			<form>
-				<formly-form form="vm.statForm" model="vm.stats.formData" fields="vm.stats.formFields">
-					<div class="sc-center-text sc-btn-margin-top">
-						<button class="button button-balanced sc-form-button" data-ng-click="vm.cancelForm();">Cancel</button>
-						<button type="submit" class="button button-balanced sc-form-button sc-btn-margin-left" data-ng-click="vm.saveStat()" data-ng-disabled="vm.statForm.$invalid">Save</button>
-        	</div>
-				</formly-form>
-			</form>
-		</div>
+  	<form id="statForm" name="statForm" novalidate="novalidate">
+
+	  	<div class="list">
+	  		<li class="item item-text-wrap sc-item">
+	  			<div>
+	  				<div class="pull-right sc-item-input-wrapper">
+			  			<input type="date" data-ng-model="vm.stats.formData.statDate" class="sc-item-input" required="required">
+			  		</div>
+			  		<div class="pull-left sc-item-header-wrapper"><strong>Date</strong></div>
+		  		</div>
+		  		<div class="sc-help-text">
+		  			Required
+		  		</div>
+			  </li> 
+
+			  <li class="item item-text-wrap sc-item">
+	  			<div>
+	  				<div class="pull-right sc-item-input-wrapper">
+			  			<select data-ng-model="vm.stats.formData.statType" data-ng-change="vm.selectStat()" data-ng-options="item.value as item.name for item in vm.stats.typeOptions" required="required"></select>
+			  		</div>
+			  		<div class="pull-left sc-item-header-wrapper"><strong>Type</strong></div>
+		  		</div>
+		  		<div class="sc-help-text">
+		  			Required
+		  		</div>
+			  </li>
+
+			  <li class="item item-text-wrap sc-item">
+	  			<div>
+	  				<div class="pull-right sc-item-input-wrapper">
+			  			<input type="{{vm.stats.statValueType}}" data-ng-model="vm.stats.formData.statValue" class="sc-item-input" placeholder="ex. 1.2" required="required">
+			  		</div>
+			  		<div class="pull-left sc-item-header-wrapper"><strong>Value</strong></div>
+		  		</div>
+		  		<div class="sc-help-text">
+		  			Required <span data-ng-bind="vm.stats.statValueDesc"></span>
+		  		</div>
+			  </li>
+
+			  <li class="item item-text-wrap sc-item">
+	  			<div>
+	  				<div class="pull-right sc-item-input-wrapper">
+			  			<input type="text" data-ng-model="vm.stats.formData.statInfo" class="sc-item-input" placeholder="ex. 10 lbs">
+			  		</div>
+			  		<div class="pull-left sc-item-header-wrapper"><strong>More Info</strong></div>
+		  		</div>
+		  		<div class="sc-help-text">
+		  			Optional - This is info such as "10lbs" for the dynamax ball used or a metric for the stat value such as inches for height, etc.
+		  		</div>
+			  </li>
+
+			  <li class="item item-text-wrap sc-item">
+			  	<div class="sc-item-header-wrapper-comments"><strong>How did you feel performing the stat?</strong></div>
+					<div style="text-align:right;">
+		  			<textarea data-ng-model="vm.stats.formData.statComment" rows="3" style="width:100%;" placeholder="ex. I felt great!"></textarea>
+		  		</div>
+		  		<div class="sc-help-text">
+		  			Optional
+		  		</div>
+			  </li>
+	  	</div>
+
+	  	<div class="sc-button-container">
+				<div class="sc-center-text sc-btn-margin-top sc-btn-margin-bottom">
+					<button class="button button-balanced sc-form-button" data-ng-click="vm.cancelForm();">Cancel</button>
+					<button type="submit" class="button button-balanced sc-form-button sc-btn-margin-left" data-ng-click="vm.saveStat()" data-ng-disabled="statForm.$invalid">Save</button>
+		  	</div>
+	  	</div> 
+  	</form>
   </ion-content>
 
 </ion-view>

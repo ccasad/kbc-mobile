@@ -3,9 +3,15 @@
 
   angular
     .module('kbcMobileApp')
+    .config(scChartConfiguration)
     .config(scIonicConfiguration)
     .config(scHttpConfiguration)
     .run(scRunBlock);
+
+  scChartConfiguration.$inject = ['ChartJsProvider'];
+  function scChartConfiguration(ChartJsProvider) {
+    ChartJsProvider.setOptions({ showScale: true });
+  }
 
   // scIonicConfiguration
   scIonicConfiguration.$inject = ['$ionicConfigProvider'];
@@ -135,6 +141,9 @@
 
       }
 
+      $rootScope.$on('$stateChangeSuccess', function(event, to, toParams, from, fromParams) {
+        $rootScope.$previousState = {from: from, fromParams: fromParams};
+      });
 
       // Check/Set network check variable via cordova plugin org.apache.cordova.network-information
       if (window.cordova) {

@@ -36,6 +36,7 @@
 
         if (user && user instanceof scUser && user.id) {
           scStorage.set('user',user);
+          //scUser.updateRootUser();
 
           // need to clear the cache and history on login, as just clearing it on logout was giving unexpected results
           scUtility.clearCache();
@@ -74,11 +75,19 @@
         .catch(failed);
 
       function success(response) {
-        return response.data;
+        if (!response || !response.data || !response.data.status || !response.data.status || !response.data.status.success) {
+          scAlert.showAlert('There was an issue registering. Please try again.');
+          return;
+        } else {
+          if (response.data.data) {
+            scAlert.showAlert('Your account has been created. You may now sign in!');
+            $state.go(APP_GLOBALS.appDefaultRoute);
+          }
+        }
       }
 
-      function failed(error) {
-        var msg = 'Issue registering. ' + error.data.description;
+      function failed() {
+        var msg = 'There was an issue registering. Please try again.';
         return $q.reject(msg);
       }
     }
@@ -92,8 +101,8 @@
         return response.data;
       }
 
-      function failed(error) {
-        var msg = 'Issue resetting password. ' + error.data.description;
+      function failed() {
+        var msg = 'Issue resetting password.';
         return $q.reject(msg);
       }
     }

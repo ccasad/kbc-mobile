@@ -23,8 +23,23 @@
     </ion-list>
 
     <div class="card text-center" data-ng-if="vm.stats.isChart">
-      <!-- <am-chart id="myFirstChart" options="vm.stats.chartOptions" style="height:500; width:100%"></am-chart> -->      
-      Chart would go here
+      <div>
+        <canvas id="line" class="chart chart-line" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="false" chart-series="vm.chart.series"></canvas> 
+      </div>
+      <!-- <div style="margin-top:15px;">
+        <form name="chartForm" novalidate="novalidate">
+          <div class="list">
+            <label class="item item-input">
+              <strong>Start Date</strong>
+              <input type="date" data-ng-model="vm.chart.statDate" class="sc-item-input">
+            </label>
+            <label class="item item-input">
+              <strong>Stop Date</strong>
+              <input type="date" data-ng-model="vm.chart.stopDate" class="sc-item-input">
+            </label>
+          </div>
+        </form>
+      </div> -->     
     </div>
 
     <div class="card text-center sc-no-data-card" data-ng-if="filteredStats.length < 1">
