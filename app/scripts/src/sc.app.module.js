@@ -50,11 +50,12 @@
       /* Shared Modules */
       'kbcMobileApp.core',
 
-      /* Feature Modules */
+      /* Feature Modules  */
       'scAuth',
       'scLayout',
       'scStats',
       'scUserAccount',
+      'scTools',
     ]);
 
   angular

@@ -1,0 +1,16 @@
+<ion-view>
+  <ion-nav-title>
+    <span data-ng-bind="::vm.reports.title"></span>
+  </ion-nav-title>
+
+  <ion-content>
+    <ion-list class="sc-jobs-list">
+    	<div class="item-divider"><span style="margin-left:10px;" data-ng-bind="::vm.reports.data.length"></span> Participants</div>
+    	<div data-ng-repeat="user in vm.reports.data" class="item">
+      	<span data-ng-bind="::user.firstName"></span> <span data-ng-bind="::user.lastName"></span>
+      </div>
+    </ion-list>
+
+  </ion-content>
+
+</ion-view>

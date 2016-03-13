@@ -2,19 +2,18 @@
 	<ion-content class="padding sc-content">
 		<div class="list card" style="text-align:center;">
       <br>
-      <!-- <div data-sc-avatar-letter="sc-avatar-letter" data-avatar-class="sc-inline-block sc-account-avatar" data-avatar-size="lg" data-background-class="warning" data-ng-bind="vm.user.firstName.charAt(0)"></div> -->
 
       <h2 data-ng-bind="vm.user.firstName+' '+vm.user.lastName"></h2>
       <h4 data-ng-bind="vm.user.email"></h4>
       <br>
-      <h4 data-ng-show="!vm.account.showForm"><a href="javascript:void(0);" data-ng-click="vm.account.showForm=true">Change password</a></h4>
+      <h4 data-ng-show="!vm.account.showForm"><a href="javascript:void(0);" data-ng-click="vm.account.showForm=true">Edit Profile</a></h4>
 
       <div style="text-align:left;">
         <form data-ng-if="vm.account.showForm">
           <formly-form form="vm.accountForm" model="vm.account.formData" fields="vm.account.formFields">
             <div class="sc-center-text sc-btn-margin-top">
               <button class="button button-balanced sc-form-button" data-ng-click="vm.clearForm();">Cancel</button>
-              <button type="submit" class="button button-balanced sc-form-button" data-ng-click="vm.updateAccount()" data-ng-disabled="vm.accountForm.$invalid">Save</button>
+              <button type="submit" class="button button-balanced sc-form-button" data-ng-click="vm.showPasswordPopup()" data-ng-disabled="vm.accountForm.$invalid">Save</button>
             </div>
           </formly-form>
         </form>

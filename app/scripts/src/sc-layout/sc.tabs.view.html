@@ -15,8 +15,13 @@ navigation history that also transitions its views in and out.
     <ion-nav-view name="user-stats-add"></ion-nav-view>
   </ion-tab>
 
+  <!-- Tools Tab -->
+  <ion-tab data-ng-if="vm.isAdmin" title="Tools" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" data-ui-sref="user.tools">
+    <ion-nav-view name="tools"></ion-nav-view>
+  </ion-tab>
+
   <!-- Account Tab -->
-  <ion-tab title="Account" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" data-ui-sref="user.account">
+  <ion-tab title="Account" icon-off="ion-ios-person-outline" icon-on="ion-ios-person" data-ui-sref="user.account">
     <ion-nav-view name="user-account"></ion-nav-view>
   </ion-tab>
 

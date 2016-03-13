@@ -11,6 +11,14 @@
   <ion-content>
 
     <ion-list class="sc-jobs-list" data-ng-if="!vm.stats.isChart">
+      <ion-item class="item-divider">
+        <span data-ng-if="!vm.stats.goal">No goal set</span>
+        <span data-ng-if="vm.stats.goal">My goal: <span class="assertive">{{vm.stats.goal}}</span></span>
+        <span class="item-note">
+          <a href="javascript:void(0);" data-ng-if="!vm.stats.goal" data-ng-click="vm.showGoalPopup()">Set my goal</a>
+          <a href="javascript:void(0);" data-ng-if="vm.stats.goal" data-ng-click="vm.showGoalPopup()">Change my goal</a>
+        </span>
+      </ion-item>
       <a data-ng-repeat="stat in filteredStats = (vm.stats.list)" class="item" id="stat-{{::stat.statId}}" data-ui-sref="user.stats-edit({userStatId: stat.userStatId})">
         <div class="sc-job-content"> 
           <span class="pull-left sc-muted" data-ng-class="{'sc-stats-date1': stat.statInfo, 'sc-stats-date2': !stat.statInfo}" data-ng-bind="::stat.statDate | scDateFormatNoTime"></span> 
@@ -24,7 +32,7 @@
 
     <div class="card text-center" data-ng-if="vm.stats.isChart">
       <div>
-        <canvas id="line" class="chart chart-line" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="false" chart-series="vm.chart.series"></canvas> 
+        <canvas id="line" class="chart chart-line" chart-data="vm.chart.data" chart-labels="vm.chart.labels" chart-legend="true" chart-series="vm.chart.series" chart-colours="vm.chart.colors" chart-legend="true" height="300"></canvas> 
       </div>
       <!-- <div style="margin-top:15px;">
         <form name="chartForm" novalidate="novalidate">

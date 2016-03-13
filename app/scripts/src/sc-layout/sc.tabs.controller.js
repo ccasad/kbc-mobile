@@ -5,13 +5,17 @@
     .module('scLayout')
     .controller('ScTabsCtrl', ScTabsCtrl);
 
-  ScTabsCtrl.$inject = [];
+  ScTabsCtrl.$inject = ['scUser'];
 
   /* @ngInject */
-  function ScTabsCtrl() {
-    //var vm = this;
+  function ScTabsCtrl(scUser) {
+    var vm = this;
 
-    ////////////
+    var user = scUser.getRootUser();
+
+    vm.isAdmin = scUser.isAdmin(user);
+
+    //////////
 
   }
 

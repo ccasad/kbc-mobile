@@ -1,0 +1,19 @@
+<ion-view>
+  <ion-nav-title>
+    <span>List of Stats</span>
+  </ion-nav-title>
+
+  <ion-nav-buttons side="secondary">
+    <a href="" data-ui-sref="user.tools-stat-add" class="button button-icon icon ion-ios-plus sc-icon-small"></a>
+  </ion-nav-buttons>
+
+  <ion-content>
+    <ion-list class="sc-jobs-list">
+      <a item="item" data-ng-repeat="stat in vm.stats.statList" class="item" id="stat-{{::stat.id}}" data-ui-sref="user.tools-stat-edit({statId: stat.id})">
+      	<span data-ng-bind="::stat.name"></span>
+      </a>
+    </ion-list>
+
+  </ion-content>
+
+</ion-view>

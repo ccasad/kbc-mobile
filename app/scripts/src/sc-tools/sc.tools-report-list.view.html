@@ -1,0 +1,15 @@
+<ion-view>
+  <ion-nav-title>
+    <span>List of Reports</span>
+  </ion-nav-title>
+
+  <ion-content>
+    <ion-list class="sc-jobs-list">
+      <a item="item" data-ng-repeat="report in vm.reports.list" class="item" id="report-{{::report.id}}" data-ui-sref="user.tools-report-detail({reportId: report.id})">
+      	<span data-ng-bind="::report.title"></span>
+      </a>
+    </ion-list>
+
+  </ion-content>
+
+</ion-view>

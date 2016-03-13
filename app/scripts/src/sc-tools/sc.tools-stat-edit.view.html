@@ -1,0 +1,55 @@
+<ion-view>
+  <ion-nav-title>
+    <span data-ng-bind="vm.stats.title"></span>
+  </ion-nav-title>
+
+  <ion-content>
+  	<form id="statForm" name="statForm" novalidate="novalidate">
+  	
+	  	<div class="list">
+	  		<li class="item item-text-wrap sc-item">
+	  			<div>
+	  				<div class="pull-right sc-item-input-wrapper">
+			  			<input type="text" data-ng-model="vm.stats.formData.statName" class="sc-item-input" placeholder="ex. Push Ups" required="required" style="width:auto;">
+			  		</div>
+			  		<div class="pull-left sc-item-header-wrapper"><strong>Name</strong></div>
+		  		</div>
+		  		<div class="sc-help-text">
+		  			Required
+		  		</div>
+			  </li> 
+
+			  <li class="item item-text-wrap sc-item">
+			  	<div class="sc-item-header-wrapper-comments"><strong>Description</strong></div>
+					<div style="text-align:right;">
+		  			<textarea data-ng-model="vm.stats.formData.statDescription" rows="3" style="width:100%;" placeholder="Enter description of the stat" required="required"></textarea>
+		  		</div>
+		  		<div class="sc-help-text">
+		  			Required
+		  		</div>
+			  </li>
+
+			  <li class="item item-text-wrap sc-item">
+	  			<div>
+	  				<div class="pull-right sc-item-input-wrapper">
+			  			<select data-ng-model="vm.stats.formData.statType" data-ng-options="item.value as item.name for item in vm.stats.types" required="required"></select>
+			  		</div>
+			  		<div class="pull-left sc-item-header-wrapper"><strong>Type</strong></div>
+		  		</div>
+		  		<div class="sc-help-text">
+		  			Required
+		  		</div>
+			  </li>
+
+	  	</div>
+
+	  	<div class="sc-button-container">
+				<div class="sc-center-text sc-btn-margin-top sc-btn-margin-bottom">
+					<button class="button button-balanced sc-form-button" data-ng-click="vm.cancelForm();">Cancel</button>
+					<button type="submit" class="button button-balanced sc-form-button sc-btn-margin-left" data-ng-click="vm.saveStat()" data-ng-disabled="statForm.$invalid">Save</button>
+		  	</div>
+	  	</div> 
+  	</form>
+  </ion-content>
+
+</ion-view>

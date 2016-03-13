@@ -47,6 +47,9 @@ ion-tabs.tabs-color-active-assertive .tab-item.tab-item-active, ion-tabs.tabs-co
 ion-tabs.tabs-color-active-balanced .tab-item.tab-item-active, ion-tabs.tabs-color-active-balanced .tab-item.active, ion-tabs.tabs-color-active-balanced .tab-item.activated {
   color: #7B8738;
 }
+.text-balanced {
+  color: #7B8738;
+}
 /*
 .bar.bar-assertive {
   background-color: #2e2e77;
@@ -560,6 +563,7 @@ a.sc-href, a:link.sc-href, a:visited.sc-href, a:hover.sc-href, a:active.sc-href 
 }
 #statForm .sc-item-input {
   font-size: 16px;
+  top-padding: 5px !important;
 }
 input[type="date"] {
   display: flex;
@@ -568,6 +572,17 @@ input[type="date"] {
   height: 25px;
   top: -3px;
 }
-
-
-
+.sc-popup-textbox {
+  padding: 0 10px !important;
+}
+.vertical-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.sc-tools-icon {
+  font-size: 115px;
+}
+.sc-tools-icon-padding {
+  padding-top: 50px;
+}

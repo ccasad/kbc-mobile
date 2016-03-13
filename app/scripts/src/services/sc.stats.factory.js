@@ -14,9 +14,12 @@
       getStat: getStat,
       getUserStats: getUserStats,
       getUserStat: getUserStat,
+      getUserStatGoal: getUserStatGoal,
+      updateUserStatGoal: updateUserStatGoal,
       getAllUsersStats: getAllUsersStats,
       updateUserStat: updateUserStat,
       deleteUserStat: deleteUserStat,
+      updateStat: updateStat,
       getStatFormElementType: getStatFormElementType
     };
 
@@ -82,6 +85,36 @@
       }
     }
 
+    function getUserStatGoal(params) {
+      return $http.get(scUtility.getRestBaseUrl()+'user-stat-goal/'+params.userId+'/'+params.statId)
+        .then(success)
+        .catch(failed);
+
+      function success(response) {
+        return response.data;
+      }
+
+      function failed(error) {
+        var msg = 'query for stat goal failed. ' + error.data.description;
+        return $q.reject(msg);
+      }
+    }
+
+    function updateUserStatGoal(params) {
+      return $http.post(scUtility.getRestBaseUrl()+'update-user-stat-goal', params)
+        .then(success)
+        .catch(failed);
+
+      function success(response) {
+        return response.data;
+      }
+
+      function failed(error) {
+        var msg = 'query for update stat goal failed. ' + error.data.description;
+        return $q.reject(msg);
+      }
+    }
+
     function getAllUsersStats(params) {
       return $http.post(scUtility.getRestBaseUrl()+'all-users-stats', params)
         .then(success)
@@ -136,6 +169,26 @@
 
       function failed() {
         var msg = 'Issue deleting user stat.';
+        return $q.reject(msg);
+      }
+    }
+
+    function updateStat(params) {
+      var action = 'add-stat';
+      if (params.statId && params.statId.length) {
+        action = 'update-stat';
+      }
+
+      return $http.post(scUtility.getRestBaseUrl()+action, params)
+        .then(success)
+        .catch(failed);
+
+      function success(response) {
+        return response.data;
+      }
+
+      function failed() {
+        var msg = 'Issue saving stat.';
         return $q.reject(msg);
       }
     }

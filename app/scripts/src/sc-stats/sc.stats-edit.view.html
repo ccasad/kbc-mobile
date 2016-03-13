@@ -3,13 +3,13 @@
     <span data-ng-bind="vm.stats.title"></span>
   </ion-nav-title>
 
-  <ion-nav-buttons side="secondary" data-ng-show="!vm.stats.isNew">
-    <button class="button button-icon icon ion-ios-trash-outline sc-icon-small" data-ng-click="vm.deleteUserStat();"></button>
+  <ion-nav-buttons side="secondary">
+    <button data-ng-if="!vm.stats.isNew" class="button button-icon icon ion-ios-trash-outline sc-icon-small" data-ng-click="vm.deleteUserStat();"></button>
   </ion-nav-buttons>
 
   <ion-content>
   	<form id="statForm" name="statForm" novalidate="novalidate">
-
+  	
 	  	<div class="list">
 	  		<li class="item item-text-wrap sc-item">
 	  			<div>

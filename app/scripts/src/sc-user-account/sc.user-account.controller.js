@@ -5,9 +5,9 @@
     .module('scUserAccount')
     .controller('ScUserAccountCtrl', ScUserAccountCtrl);
 
-  ScUserAccountCtrl.$inject = ['scUser', 'scAuth', 'scAlert', '$ionicActionSheet'];
+  ScUserAccountCtrl.$inject = ['scUser', 'scAuth', 'scAlert', '$ionicActionSheet', '$scope', '$ionicPopup'];
 
-  function ScUserAccountCtrl(scUser, scAuth, scAlert, $ionicActionSheet) {
+  function ScUserAccountCtrl(scUser, scAuth, scAlert, $ionicActionSheet, $scope, $ionicPopup) {
     var vm = this;
 
     vm.user = scUser.getRootUser();
@@ -16,16 +16,30 @@
       showForm: false,
       formData: {},
       formFields: [],
+      currentPassword: null,
     };
 
     vm.account.fields = {
-      currentPassword: {
-        key: 'currentPassword',
+      firstName: {
+        key: 'firstName',
         type: 'stacked-input',
+        defaultValue: vm.user.firstName,
         templateOptions: {
-          type: 'password',
-          label: 'Current password *',
-          placeholder: 'Enter your current password',
+          type: 'text',
+          label: 'First Name *',
+          placeholder: 'Enter your first name',
+          addonLeft: 'text',
+          required: true
+        }
+      },
+      lastName: {
+        key: 'lastName',
+        type: 'stacked-input',
+        defaultValue: vm.user.lastName,
+        templateOptions: {
+          type: 'text',
+          label: 'Last Name *',
+          placeholder: 'Enter your last name',
           addonLeft: 'text',
           required: true
         }
@@ -35,10 +49,10 @@
         type: 'stacked-input',
         templateOptions: {
           type: 'password',
-          label: 'New password *',
+          label: 'New password',
           placeholder: 'Enter a new password',
           addonLeft: 'text',
-          required: true
+          required: false
         }
       },
       confirmPassword: {
@@ -46,10 +60,10 @@
         type: 'stacked-input',
         templateOptions: {
           type: 'password',
-          label: 'Confirm password *',
+          label: 'Confirm password',
           placeholder: 'Confirm the new password',
           addonLeft: 'text',
-          required: true
+          required: false
         }
       }
     };
@@ -58,6 +72,7 @@
     vm.updateAccount = updateAccount;
     vm.signOut = signOut;
     vm.clearForm = clearForm;
+    vm.showPasswordPopup = showPasswordPopup;
 
     ///////////////
 
@@ -65,26 +80,43 @@
 
     function setFormFields() {
       vm.account.formFields = [
-        vm.account.fields.currentPassword,
+        vm.account.fields.firstName,
+        vm.account.fields.lastName,
         vm.account.fields.newPassword,
         vm.account.fields.confirmPassword
       ];
     }
 
     function updateAccount() {
-      if (vm.account.formData.currentPassword && vm.account.formData.newPassword && vm.account.formData.confirmPassword) {
-        if (vm.account.formData.newPassword !== vm.account.formData.confirmPassword) {
+      if (vm.account.currentPassword) {
+        if (vm.account.formData.newPassword && (vm.account.formData.newPassword !== vm.account.formData.confirmPassword)) {
           scAlert.error('Your confirm password must match your new password.');
         }
         var params = {
-          passwordCurrent: vm.account.formData.currentPassword,
+          firstName: vm.account.formData.firstName,
+          lastName: vm.account.formData.lastName,
           passwordNew: vm.account.formData.newPassword,
-          passwordConfirm: vm.account.formData.confirmPassword
+          passwordConfirm: vm.account.formData.confirmPassword,
+          passwordCurrent: vm.account.currentPassword,
         };
 
-        return scUser.updateAccount(params).then(function() {
-          scAlert.success('You password has been saved');
-          vm.clearForm();
+        return scUser.updateAccount(params).then(function(response) {
+          if (!response || !response.status || (response.status && !response.status.success)) {
+            var message = '';
+            if (response.status.msg) {
+              message = response.status.msg;
+            }
+            scAlert.error(message);
+          } else {
+            scAlert.success('You profile information has been saved');
+            vm.clearForm();
+            scUser.updateRootUser();
+
+            if (response.data) {
+              vm.user.firstName = response.data.firstName;
+              vm.user.lastName = response.data.lastName;
+            }
+          }
         });
       } else {
         scAlert.error('All fields are required.');
@@ -107,10 +139,37 @@
     }
 
     function clearForm() {
-      vm.account.formData.currentPassword = '';
       vm.account.formData.newPassword = '';
       vm.account.formData.confirmPassword = '';
       vm.account.showForm = false;
+    }
+
+    function showPasswordPopup() {
+      vm.account.currentPassword = '';
+
+      $ionicPopup.show({
+        template: '<input type="text" data-ng-model="vm.account.currentPassword" placeholder="Current password" class="sc-popup-textbox">',
+        title: 'Enter your current password',
+        scope: $scope,
+        buttons: [
+          { 
+            text: 'Cancel'
+          },
+          {
+            text: '<b>Ok</b>',
+            type: 'button-balanced sc-form-button',
+            onTap: function(e) {
+              if (!vm.account.currentPassword) {
+                //don't allow the user to close unless they enter a goal 
+                e.preventDefault();
+              } else {
+                updateAccount();
+                return vm.account.currentPassword;
+              }
+            }
+          }
+        ]
+      }); 
     }
   }
 
