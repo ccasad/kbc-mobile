@@ -586,3 +586,34 @@ input[type="date"] {
 .sc-tools-icon-padding {
   padding-top: 50px;
 }
+
+/* popup calendar */
+.ionic_datepicker_popup .popup-body .selected_date_full {
+    background-color: #7B8738 !important;
+    color: #fff;
+}
+.ionic_datepicker_popup .popup-buttons button {
+    background-color: #7B8738 !important;
+    color: #ffffff;
+}
+.ionic_datepicker_popup .selected_date {
+    background-color: #7B8738 !important;
+    color: #fff;
+}
+.ionic_datepicker_popup .today {
+    border: 1px solid #7B8738 !important;
+}
+.ionic_datepicker_popup .popup-body .button-clear {
+    color: #7B8738 !important;
+}
+.ionic_datepicker_popup .popup-body .month_select, .ionic_datepicker_popup .popup-body .year_select {
+    border-bottom: 1px solid #7B8738 !important;
+}
+.ionic_datepicker_popup .popup-body .month_select, .ionic_datepicker_popup .popup-body .year_select {
+    border-bottom: 1px solid #7B8738 !important;
+}
+.ionic_datepicker_popup .today {
+    border: 1px solid #7B8738 !important;
+}
+
+/* END popup calendar */

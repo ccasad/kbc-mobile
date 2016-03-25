@@ -33,6 +33,8 @@
       'monospaced.elastic',
       'formlyIonic',
       'chart.js',
+      'ionic-datepicker',
+      'ionic-modal-select',
       
       /* App ENV constants - generated via grunt as per ENV */
       'kbcMobileApp.constants',

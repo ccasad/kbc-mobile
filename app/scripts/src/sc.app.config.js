@@ -6,11 +6,30 @@
     .config(scChartConfiguration)
     .config(scIonicConfiguration)
     .config(scHttpConfiguration)
+    .config(scDatePickerConfiguration)
     .run(scRunBlock);
 
   scChartConfiguration.$inject = ['ChartJsProvider'];
   function scChartConfiguration(ChartJsProvider) {
     ChartJsProvider.setOptions({ showScale: true });
+  }
+
+  scDatePickerConfiguration.$inject = ['ionicDatePickerProvider'];
+  function scDatePickerConfiguration(ionicDatePickerProvider) {
+    var datePickerObj = {
+      inputDate: new Date(),
+      setLabel: 'Set',
+      todayLabel: 'Today',
+      closeLabel: 'Close',
+      mondayFirst: false,
+      weeksList: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+      monthsList: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      templateType: 'popup',
+      showTodayButton: true,
+      dateFormat: 'dd MMMM yyyy',
+      closeOnSelect: true,
+    };
+    ionicDatePickerProvider.configDatePicker(datePickerObj);
   }
 
   // scIonicConfiguration

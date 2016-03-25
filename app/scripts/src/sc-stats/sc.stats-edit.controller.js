@@ -5,10 +5,10 @@
     .module('scStats')
     .controller('ScStatsEditCtrl', ScStatsEditCtrl);
 
-  ScStatsEditCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state', '$ionicActionSheet', '$rootScope', 'scMoment'];
+  ScStatsEditCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state', '$ionicActionSheet', '$rootScope', 'scMoment', 'ionicDatePicker'];
 
   /* @ngInject */
-  function ScStatsEditCtrl(scStats, scUser, scAlert, _, $state, $ionicActionSheet, $rootScope, scMoment) {
+  function ScStatsEditCtrl(scStats, scUser, scAlert, _, $state, $ionicActionSheet, $rootScope, scMoment, ionicDatePicker) {
     var vm = this;
 
     vm.user = scUser.getRootUser();
@@ -27,7 +27,18 @@
       statValueType: 'text',
       statValueDesc: '',
       isNew: true,
-      title: 'New Stat'
+      title: 'New Stat',
+      datePicker: {
+        callback: function(val) {
+          console.log('Date selected: '+val, new Date(val));
+        }
+      },
+      selectableNames:  [
+        { name : 'Mauro', role : 'black hat'}, 
+        { name : 'Silvia', role : 'pineye'},
+        { name : 'Merlino', role : 'little canaglia'}
+      ],
+      someSetModel: 'Mauro',
     };
 
     vm.selectStat = selectStat;
@@ -36,6 +47,7 @@
 	  vm.saveStat = saveStat;
     vm.deleteUserStat = deleteUserStat;
 	  vm.cancelForm = cancelForm;
+    vm.openDatePicker = openDatePicker;
 
     ////////////
 
@@ -188,6 +200,10 @@
           $state.go(prevState.from, prevState.fromParams);
         }
       } 
+    }
+
+    function openDatePicker() {
+      ionicDatePicker.openDatePicker(vm.stats.datePicker);
     }
   }
 

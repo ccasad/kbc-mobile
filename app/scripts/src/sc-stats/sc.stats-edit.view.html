@@ -14,7 +14,8 @@
 	  		<li class="item item-text-wrap sc-item">
 	  			<div>
 	  				<div class="pull-right sc-item-input-wrapper">
-			  			<input type="date" data-ng-model="vm.stats.formData.statDate" class="sc-item-input" required="required">
+			  			<!-- <input type="date" data-ng-model="vm.stats.formData.statDate" class="sc-item-input" required="required"> -->
+			  			<button data-ng-click="vm.openDatePicker()">Date</button>
 			  		</div>
 			  		<div class="pull-left sc-item-header-wrapper"><strong>Date</strong></div>
 		  		</div>
@@ -26,7 +27,14 @@
 			  <li class="item item-text-wrap sc-item">
 	  			<div>
 	  				<div class="pull-right sc-item-input-wrapper">
-			  			<select data-ng-model="vm.stats.formData.statType" data-ng-change="vm.selectStat()" data-ng-options="item.value as item.name for item in vm.stats.typeOptions" required="required"></select>
+			  			<!-- <select data-ng-model="vm.stats.formData.statType" data-ng-change="vm.selectStat()" data-ng-options="item.value as item.name for item in vm.stats.typeOptions" required="required"></select> -->
+			  			<button class="button button-royal" modal-select="" data-ng-model="vm.stats.formData.statType" data-options="vm.stats.selectableNames" data-option-property="name">
+			  				{{ vm.stats.formData.statType || &apos;Select it&apos;}}
+		            <div class="option">
+		              <h2>{{option.name}}</h2>
+		              <p>{{option.role}}</p>
+		            </div>
+			  			</button>
 			  		</div>
 			  		<div class="pull-left sc-item-header-wrapper"><strong>Type</strong></div>
 		  		</div>
