@@ -148,7 +148,7 @@
       vm.account.currentPassword = '';
 
       $ionicPopup.show({
-        template: '<input type="text" data-ng-model="vm.account.currentPassword" placeholder="Current password" class="sc-popup-textbox">',
+        template: '<input type="password" data-ng-model="vm.account.currentPassword" placeholder="Current password" class="sc-popup-textbox">',
         title: 'Enter your current password',
         scope: $scope,
         buttons: [
