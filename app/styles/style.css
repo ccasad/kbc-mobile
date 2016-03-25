@@ -609,11 +609,16 @@ input[type="date"] {
 .ionic_datepicker_popup .popup-body .month_select, .ionic_datepicker_popup .popup-body .year_select {
     border-bottom: 1px solid #7B8738 !important;
 }
-.ionic_datepicker_popup .popup-body .month_select, .ionic_datepicker_popup .popup-body .year_select {
-    border-bottom: 1px solid #7B8738 !important;
+.ionic_datepicker_popup .popup-head {
+  background-color: #7B8738;
+  display: none;
 }
-.ionic_datepicker_popup .today {
-    border: 1px solid #7B8738 !important;
+.ionic_datepicker_popup .popup-body .month_select:after, .ionic_datepicker_popup .popup-body .year_select:after {
+  right: 5px;
+  color: #7B8738;
 }
-
 /* END popup calendar */
+
+.sc-date-button {
+  white-space: nowrap;
+}

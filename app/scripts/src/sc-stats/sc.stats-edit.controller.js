@@ -5,10 +5,10 @@
     .module('scStats')
     .controller('ScStatsEditCtrl', ScStatsEditCtrl);
 
-  ScStatsEditCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state', '$ionicActionSheet', '$rootScope', 'scMoment', 'ionicDatePicker'];
+  ScStatsEditCtrl.$inject = ['scStats', 'scUser', 'scAlert', '_', '$state', '$ionicActionSheet', '$rootScope', 'scMoment', '$filter', 'ionicDatePicker'];
 
   /* @ngInject */
-  function ScStatsEditCtrl(scStats, scUser, scAlert, _, $state, $ionicActionSheet, $rootScope, scMoment, ionicDatePicker) {
+  function ScStatsEditCtrl(scStats, scUser, scAlert, _, $state, $ionicActionSheet, $rootScope, scMoment, $filter, ionicDatePicker) {
     var vm = this;
 
     vm.user = scUser.getRootUser();
@@ -28,9 +28,11 @@
       statValueDesc: '',
       isNew: true,
       title: 'New Stat',
+      dateValue: null,
       datePicker: {
         callback: function(val) {
-          console.log('Date selected: '+val, new Date(val));
+          vm.stats.formData.statDate = scMoment(val).toDate();
+          vm.stats.dateValue = $filter('scDateFormatNoTime')(vm.stats.formData.statDate);
         }
       },
       selectableNames:  [
@@ -41,6 +43,8 @@
       someSetModel: 'Mauro',
     };
 
+    vm.stats.dateValue = $filter('scDateFormatNoTime')(vm.stats.formData.statDate);
+    
     vm.selectStat = selectStat;
 	  vm.getStats = getStats;
 	  vm.getStat = getStat;
