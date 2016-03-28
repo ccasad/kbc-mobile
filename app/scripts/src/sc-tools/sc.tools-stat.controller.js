@@ -40,6 +40,7 @@
             vm.stats.formData.statName = vm.stats.selectedStat.name;
             vm.stats.formData.statDescription = vm.stats.selectedStat.description;
             vm.stats.formData.statType = vm.stats.selectedStat.formElementId;
+            vm.stats.formData.statExampleValue = vm.stats.selectedStat.exampleValue;
           }
         } else if ($state.current.name === 'user.tools-stat-add') {
           vm.stats.title = 'Add Stat';
@@ -57,6 +58,7 @@
           statName: vm.stats.formData.statName,
           statType: vm.stats.formData.statType,
           statDescription: vm.stats.formData.statDescription,
+          statExampleValue: vm.stats.formData.statExampleValue,
         };
 
         return scStats.updateStat(params).then(function(response) {
@@ -70,6 +72,7 @@
             vm.stats.formData.statName = null;
             vm.stats.formData.statType = null;
             vm.stats.formData.statDescription = null; 
+            vm.stats.formData.statExampleValue = null;
           }
           $state.go('user.tools-stat-list');
         });

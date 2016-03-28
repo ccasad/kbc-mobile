@@ -35,12 +35,8 @@
           vm.stats.dateValue = $filter('scDateFormatNoTime')(vm.stats.formData.statDate);
         }
       },
-      selectableNames:  [
-        { name : 'Mauro', role : 'black hat'}, 
-        { name : 'Silvia', role : 'pineye'},
-        { name : 'Merlino', role : 'little canaglia'}
-      ],
-      someSetModel: 'Mauro',
+      typeSelectValue: null,
+      placeholder: ''
     };
 
     vm.stats.dateValue = $filter('scDateFormatNoTime')(vm.stats.formData.statDate);
@@ -73,6 +69,10 @@
         vm.stats.statValueDesc = '- '+stat.description;
       }
       vm.isInitial = false;
+
+      vm.stats.typeSelectValue = stat.name;
+
+      vm.stats.placeholder = (stat.exampleValue) ? stat.exampleValue : '1.2';
     } 
 
     function getStatOptions() {
@@ -82,9 +82,11 @@
 					vm.stats.typeOptions.push({name: stat.name, value: stat.id});
 				});
 
-        vm.stats.formData.statType = vm.stats.list[0].id; 
-        selectStat();
-
+        // if (!vm.stats.formData.statType) {
+        //   vm.stats.formData.statType = vm.stats.list[0].id; 
+        //   selectStat();
+        // }
+        
 				return vm.stats.typeOptions;
     	});
     }
@@ -136,7 +138,9 @@
             $state.go('user.stats-pr-list');
           }
 	      });
-    	}
+    	} else {
+        scAlert.error('A stat date, type and value must entered.');
+      }
     }
 
     function deleteUserStat() {
@@ -191,6 +195,9 @@
           vm.stats.formData.statValue = response.data.value;
           vm.stats.formData.statInfo = response.data.info;
           vm.stats.formData.statComment = response.data.comment;
+
+          vm.stats.dateValue = $filter('scDateFormatNoTime')(vm.stats.formData.statDate);
+          vm.stats.typeSelectValue = response.data.name;
         });
       }
     }

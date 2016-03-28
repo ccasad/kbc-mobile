@@ -15,7 +15,7 @@
 	  			<div>
 	  				<div class="pull-right sc-item-input-wrapper">
 			  			<!-- <input type="date" data-ng-model="vm.stats.formData.statDate" class="sc-item-input" required="required"> -->
-			  			<button data-ng-click="vm.openDatePicker()" class="button button-small button-balanced sc-form-button sc-date-button"><span data-ng-bind="vm.stats.dateValue"></span></button>
+			  			<button data-ng-click="vm.openDatePicker()" class="button button-small button-balanced sc-date-button sc-form-selector-button"><span data-ng-bind="vm.stats.dateValue"></span></button>
 			  		</div>
 			  		<div class="pull-left sc-item-header-wrapper"><strong>Date</strong></div>
 		  		</div>
@@ -28,11 +28,10 @@
 	  			<div>
 	  				<div class="pull-right sc-item-input-wrapper">
 			  			<!-- <select data-ng-model="vm.stats.formData.statType" data-ng-change="vm.selectStat()" data-ng-options="item.value as item.name for item in vm.stats.typeOptions" required="required"></select> -->
-			  			<button class="button button-royal" modal-select="" data-ng-model="vm.stats.formData.statType" data-options="vm.stats.selectableNames" data-option-property="name">
-			  				{{ vm.stats.formData.statType || &apos;Select it&apos;}}
+			  			<button class="button button-small button-balanced sc-form-selector-button" modal-select="" data-ng-model="vm.stats.formData.statType" data-options-expression="item.value as item.name for item in vm.stats.typeOptions" data-option-property="value" data-on-select="vm.selectStat()">
+			  				{{ vm.stats.typeSelectValue || &apos;Select a type&apos;}}
 		            <div class="option">
-		              <h2>{{option.name}}</h2>
-		              <p>{{option.role}}</p>
+		            	<h2>{{option.name}}</h2>
 		            </div>
 			  			</button>
 			  		</div>
@@ -46,7 +45,7 @@
 			  <li class="item item-text-wrap sc-item">
 	  			<div>
 	  				<div class="pull-right sc-item-input-wrapper">
-			  			<input type="{{vm.stats.statValueType}}" data-ng-model="vm.stats.formData.statValue" class="sc-item-input" placeholder="ex. 1.2" required="required">
+			  			<input type="{{vm.stats.statValueType}}" data-ng-model="vm.stats.formData.statValue" class="sc-item-input sc-input-form-field" placeholder="ex. {{vm.stats.placeholder}}" required="required">
 			  		</div>
 			  		<div class="pull-left sc-item-header-wrapper"><strong>Value</strong></div>
 		  		</div>
@@ -58,7 +57,7 @@
 			  <li class="item item-text-wrap sc-item">
 	  			<div>
 	  				<div class="pull-right sc-item-input-wrapper">
-			  			<input type="text" data-ng-model="vm.stats.formData.statInfo" class="sc-item-input" placeholder="ex. 10 lbs">
+			  			<input type="text" data-ng-model="vm.stats.formData.statInfo" class="sc-item-input sc-input-form-field" placeholder="ex. 10 lbs">
 			  		</div>
 			  		<div class="pull-left sc-item-header-wrapper"><strong>More Info</strong></div>
 		  		</div>
@@ -70,7 +69,7 @@
 			  <li class="item item-text-wrap sc-item">
 			  	<div class="sc-item-header-wrapper-comments"><strong>How did you feel performing the stat?</strong></div>
 					<div style="text-align:right;">
-		  			<textarea data-ng-model="vm.stats.formData.statComment" rows="3" style="width:100%;" placeholder="ex. I felt great!"></textarea>
+		  			<textarea data-ng-model="vm.stats.formData.statComment" rows="2" style="width:100%;" placeholder="ex. I felt great!"></textarea>
 		  		</div>
 		  		<div class="sc-help-text">
 		  			Optional

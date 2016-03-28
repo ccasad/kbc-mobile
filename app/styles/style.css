@@ -617,8 +617,25 @@ input[type="date"] {
   right: 5px;
   color: #7B8738;
 }
+.date_selection {
+  margin-left: 15px;
+  width: 230px;
+}
+.row .select_section {
+  width: 210px;
+}
 /* END popup calendar */
 
+.sc-input-form-field {
+  border-bottom: 1px solid #7B8738 !important;
+  width: 93px;
+}
+.sc-form-selector-button {
+  padding: 2px 10px 1px;
+}
 .sc-date-button {
   white-space: nowrap;
+}
+.sc-listing-item {
+  margin-left: 10px;
 }

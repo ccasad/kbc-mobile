@@ -47,7 +47,7 @@
         }
       })
       .state('user.stats-add', {
-        //cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
+        cache: false, // Or set via <ion-view cache-view="false" view-title="My Title!">
         url: '/stats-add',
         views: {
           'user-stats-add': {

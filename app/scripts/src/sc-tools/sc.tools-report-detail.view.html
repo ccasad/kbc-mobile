@@ -4,12 +4,14 @@
   </ion-nav-title>
 
   <ion-content>
-    <ion-list class="sc-jobs-list">
-    	<div class="item-divider"><span style="margin-left:10px;" data-ng-bind="::vm.reports.data.length"></span> Participants</div>
-    	<div data-ng-repeat="user in vm.reports.data" class="item">
-      	<span data-ng-bind="::user.firstName"></span> <span data-ng-bind="::user.lastName"></span>
+
+    <div class="list sc-jobs-list">
+    	<div class="item item-divider"><span class="item-note" data-ng-bind="'Total count: '+vm.reports.data.length"></span></div>
+    	<div sc-list-divider list-divider-value="{{user.lastName}}" data-ng-repeat="user in vm.reports.data | orderBy:['lastName','firstName']" class="item">
+      	<span class="sc-listing-item" data-ng-bind="::user.lastName"></span>, <span data-ng-bind="::user.firstName"></span> <span class="item-note" data-ng-bind="::user.email"></span>
       </div>
-    </ion-list>
+      <div class="item item-divider"><span class="item-note" data-ng-bind="'Total count: '+vm.reports.data.length"></span></div>
+    </div>
 
   </ion-content>
 
