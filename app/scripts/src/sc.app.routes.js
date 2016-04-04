@@ -33,7 +33,9 @@
         // url: '/user',
         abstract: true,
         // template: '<div ui-view></div>',
+        cache: false,
         templateUrl: componentPath+'sc-layout/sc.tabs.view.html',
+        controller: 'ScTabsCtrl as vm',
         data: {
           access: access.user,
           // requiresLogin: true
